@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>536840000359-earo3kp6216mbqgtb0s0jorrsiq5kkd8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.536840000359-earo3kp6216mbqgtb0s0jorrsiq5kkd8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDKHZPjV0Uy4_dA3PHukGQbEGBFhnGosq4</string>
+	<key>GCM_SENDER_ID</key>
+	<string>536840000359</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>uci.smoothieapp</string>
+	<key>PROJECT_ID</key>
+	<string>cs125-22717</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cs125-22717.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:536840000359:ios:cf1e4c37e1c7fe955055c2</string>
+	<key>DATABASE_URL</key>
+	<string>https://cs125-22717.firebaseio.com</string>
+</dict>
+</plist>
