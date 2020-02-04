@@ -7,9 +7,13 @@
 //
 
 import SwiftUI
+import FirebaseDatabase
+
+let ref = Database.database().reference(withPath: "recipes")
 
 struct FoodView: View {
     var body: some View {
+        
         NavigationView {
             List {
                 Text("Hello World")
