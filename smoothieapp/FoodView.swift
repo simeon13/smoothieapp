@@ -46,20 +46,26 @@ class observer : ObservableObject {
                 let value = child.value as? NSDictionary
                 let name = value?["name"] as? String ?? ""
                 let url = value?["url"] as? String ?? ""
-                let info = Recipe(id: name, name: name, url: url)
+                let image = value?["image"] as? String ?? ""
+                let calcium = value?["calcium"] as? String ?? ""
+                let fiber = value?["fiber"] as? String ?? ""
+                let iron = value?["iron"] as? String ?? ""
+                let magnesium = value?["magnesium"] as? String ?? ""
+                let potassium = value?["potassium"] as? String ?? ""
+                let protein = value?["protein"] as? String ?? ""
+                let vitaminA = value?["vitaminA"] as? String ?? ""
+                let vitaminB12 = value?["vitaminB12"] as? String ?? ""
+                let vitaminC = value?["vitaminC"] as? String ?? ""
+                let vitaminD = value?["vitaminD"] as? String ?? ""
+                let vitaminE = value?["vitaminE"] as? String ?? ""
+                let vitaminK = value?["vitaminK"] as? String ?? ""
+                let zinc = value?["zinc"] as? String ?? ""
+                // create new recipe object
+                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
                 print(name)
                 self.data.append(info)
             }
         })
-//            let value = snapshot.value as? NSDictionary
-//            let name = value?["name"] as? String ?? ""
-//            let url = value?["url"] as? String ?? ""
-//            let info = Recipe(id: "hi", name: name, url: url)
-//            self.data.append(info)
-//           ...
-//          }) { (error) in
-//            print(error.localizedDescription)
-//        }
     }
 }
 
@@ -67,4 +73,18 @@ struct Recipe : Identifiable {
     var id : String
     var name : String
     var url : String
+    var image : String
+    var calcium : String
+    var fiber : String
+    var iron : String
+    var magnesium : String
+    var potassium : String
+    var protein : String
+    var vitaminA : String
+    var vitaminB12 : String
+    var vitaminC : String
+    var vitaminD : String
+    var vitaminE : String
+    var vitaminK : String
+    var zinc : String
 }
