@@ -18,7 +18,9 @@ struct FoodView: View {
                 // Recipes
                 Section(header: Text("Recipes")) {
                     ForEach(recipes.data){i in
-                        Text(i.name)
+                        NavigationLink(destination: RecipeView(recipe: i)) {
+                            RecipeRow(recipe: i)
+                        }
                     }
                 }
                 
@@ -33,6 +35,20 @@ struct FoodView: View {
 struct FoodView_Previews: PreviewProvider {
     static var previews: some View {
         FoodView()
+    }
+}
+
+struct RecipeView: View {
+    var recipe: Recipe
+    var body: some View {
+        Text("Working")
+    }
+}
+
+struct RecipeRow: View {
+    var recipe: Recipe
+    var body: some View {
+        Text(recipe.name)
     }
 }
 
