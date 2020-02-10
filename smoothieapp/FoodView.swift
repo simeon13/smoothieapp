@@ -62,7 +62,6 @@ class observer : ObservableObject {
                 let zinc = value?["zinc"] as? String ?? ""
                 // create new recipe object
                 let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
-                print(name)
                 self.data.append(info)
             }
         })
