@@ -79,3 +79,47 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct UserProfile : Identifiable {
+    var id : String
+    var first_name : String
+    var last_name : String
+    var age : Int
+    var gender : String
+    var allergies : [String]
+    var health_options : [String]
+}
+
+struct totalValues : Identifiable {
+    var id : String
+    var calcium : Double
+    var fiber : Double
+    var iron : Double
+    var magnesium : Double
+    var potassium : Double
+    var protein : Double
+    var vitaminA : Double
+    var vitaminB12 : Double
+    var vitaminC : Double
+    var vitaminD : Double
+    var vitaminE : Double
+    var vitaminK : Double
+    var zinc : Double
+}
+
+struct maxValues : Identifiable {
+    var id : String
+    var calcium : Double
+    var fiber : Double
+    var iron : Double
+    var magnesium : Double
+    var potassium : Double
+    var protein : Double
+    var vitaminA : Double
+    var vitaminB12 : Double
+    var vitaminC : Double
+    var vitaminD : Double
+    var vitaminE : Double
+    var vitaminK : Double
+    var zinc : Double
+}
