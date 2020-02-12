@@ -9,6 +9,8 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var userInfo = starting()
+    
     var body: some View {
         NavigationView{
             ZStack {
@@ -80,6 +82,16 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+class starting : ObservableObject {
+    @Published var user_profile = [UserProfile]()
+    @Published var total_values = [TotalValues]()
+    @Published var max_values = [MaxValues]()
+    
+    init(){
+        // grab whatever you can and add to user profile
+    }
+}
+
 struct UserProfile : Identifiable {
     var id : String
     var first_name : String
@@ -90,7 +102,7 @@ struct UserProfile : Identifiable {
     var health_options : [String]
 }
 
-struct totalValues : Identifiable {
+struct TotalValues : Identifiable {
     var id : String
     var calcium : Double
     var fiber : Double
@@ -107,7 +119,7 @@ struct totalValues : Identifiable {
     var zinc : Double
 }
 
-struct maxValues : Identifiable {
+struct MaxValues : Identifiable {
     var id : String
     var calcium : Double
     var fiber : Double
