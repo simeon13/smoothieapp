@@ -133,17 +133,17 @@ class observer : ObservableObject {
                     let name = child.key.capitalized
                     let calcium = value?["calcium"] as? Double ?? 0.0
                     let fiber = value?["fiber"] as? Double ?? 0.0
-                    let iron = value?["iron"] as? String ?? ""
-                    let magnesium = value?["magnesium"] as? String ?? ""
-                    let potassium = value?["potassium"] as? String ?? ""
-                    let protein = value?["protein"] as? String ?? ""
-                    let vitaminA = value?["vitaminA"] as? String ?? ""
-                    let vitaminB12 = value?["vitaminB12"] as? String ?? ""
-                    let vitaminC = value?["vitaminC"] as? String ?? ""
-                    let vitaminD = value?["vitaminD"] as? String ?? ""
-                    let vitaminE = value?["vitaminE"] as? String ?? ""
-                    let vitaminK = value?["vitaminK"] as? String ?? ""
-                    let zinc = value?["zinc"] as? String ?? ""
+                    let iron = value?["iron"] as? Double ?? 0
+                    let magnesium = value?["magnesium"] as? Double ?? 0
+                    let potassium = value?["potassium"] as? Double ?? 0
+                    let protein = value?["protein"] as? Double ?? 0
+                    let vitaminA = value?["vitaminA"] as? Double ?? 0
+                    let vitaminB12 = value?["vitaminB12"] as? Double ?? 0
+                    let vitaminC = value?["vitaminC"] as? Double ?? 0
+                    let vitaminD = value?["vitaminD"] as? Double ?? 0
+                    let vitaminE = value?["vitaminE"] as? Double ?? 0
+                    let vitaminK = value?["vitaminK"] as? Double ?? 0
+                    let zinc = value?["zinc"] as? Double ?? 0
                     // create new foodItem object
                     let food_item = FoodItem(id: name, name: name, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
                     if (entry == "Vegetables"){
@@ -211,14 +211,18 @@ struct FoodItemView: View {
         List{
             Text("Calcium: " + String(foodItem.calcium))
             Text("Fiber: " + String(foodItem.fiber))
-            Text("Fiber: " + String(foodItem.iron))
-            Text("Fiber: " + String(foodItem.magnesium))
-            Text("Fiber: " + String(foodItem.potassium))
-            Text("Fiber: " + String(foodItem.protein))
-            Text("Fiber: " + String(foodItem.vitaminA))
-            Text("Fiber: " + String(foodItem.vitaminB12))
-            Text("Fiber: " + String(foodItem.fiber))
+            Text("Iron: " + String(foodItem.iron))
+            Text("Potassium: " + String(foodItem.potassium))
+            Text("Protein: " + String(foodItem.protein))
+            Text("Vitamin A: " + String(foodItem.vitaminA))
+            Text("Vitamin B12: " + String(foodItem.vitaminB12))
+            Text("Vitamin C: " + String(foodItem.vitaminC))
+            Text("Vitamin D: " + String(foodItem.vitaminD))
+            Text("Vitamin E: " + String(foodItem.vitaminE))
             
+            // not sure why but these cause errors
+            //Text("Vitamin K: " + String(foodItem.vitaminK))
+            //Text("Zinc: " + String(foodItem.zinc))
         }
         }
 }
@@ -235,15 +239,15 @@ struct FoodItem : Identifiable {
     var name : String
     var calcium : Double
     var fiber : Double
-    var iron : String
-    var magnesium : String
-    var potassium : String
-    var protein : String
-    var vitaminA : String
-    var vitaminB12 : String
-    var vitaminC : String
-    var vitaminD : String
-    var vitaminE : String
-    var vitaminK : String
-    var zinc : String
+    var iron : Double
+    var magnesium : Double
+    var potassium : Double
+    var protein : Double
+    var vitaminA : Double
+    var vitaminB12 : Double
+    var vitaminC : Double
+    var vitaminD : Double
+    var vitaminE : Double
+    var vitaminK : Double
+    var zinc : Double
 }
