@@ -131,8 +131,8 @@ class observer : ObservableObject {
                 for child in snapshot.children.allObjects as! [DataSnapshot] {
                     let value = child.value as? NSDictionary
                     let name = child.key.capitalized
-                    let calcium = value?["calcium"] as? String ?? ""
-                    let fiber = value?["fiber"] as? String ?? ""
+                    let calcium = value?["calcium"] as? Double ?? 0.0
+                    let fiber = value?["fiber"] as? Double ?? 0.0
                     let iron = value?["iron"] as? String ?? ""
                     let magnesium = value?["magnesium"] as? String ?? ""
                     let potassium = value?["potassium"] as? String ?? ""
@@ -208,8 +208,19 @@ struct Recipe : Identifiable {
 struct FoodItemView: View {
     var foodItem : FoodItem
     var body: some View {
-        Text("Food Item Working")
-    }
+        List{
+            Text("Calcium: " + String(foodItem.calcium))
+            Text("Fiber: " + String(foodItem.fiber))
+            Text("Fiber: " + String(foodItem.iron))
+            Text("Fiber: " + String(foodItem.magnesium))
+            Text("Fiber: " + String(foodItem.potassium))
+            Text("Fiber: " + String(foodItem.protein))
+            Text("Fiber: " + String(foodItem.vitaminA))
+            Text("Fiber: " + String(foodItem.vitaminB12))
+            Text("Fiber: " + String(foodItem.fiber))
+            
+        }
+        }
 }
 
 struct FoodItemRow: View {
@@ -222,8 +233,8 @@ struct FoodItemRow: View {
 struct FoodItem : Identifiable {
     var id : String
     var name : String
-    var calcium : String
-    var fiber : String
+    var calcium : Double
+    var fiber : Double
     var iron : String
     var magnesium : String
     var potassium : String
