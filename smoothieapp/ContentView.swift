@@ -22,8 +22,19 @@ struct ContentView: View {
                         .fontWeight(.bold)
                         .foregroundColor(Color.blue)
                         .padding([.leading, .bottom, .trailing], 10.0)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    Divider()
+                    .frame(height: 5.0)
+                    
+                    
+                    Text("Hello \(userInfo.user_profile.first_name)!")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(Color.black)
+                        .padding()
+                        .frame(maxWidth: .infinity, alignment: .center)
                     Spacer()
-                        .frame(height: 80.0)
+                    .frame(height: 25.0)
                     
                     NavigationLink(destination: FoodView()){
                             Text("Food Information")
@@ -34,6 +45,7 @@ struct ContentView: View {
                                 .frame(width: 250.0)
                                 .background(Color.blue)
                                 .cornerRadius(10)
+                                .frame(maxWidth: .infinity, alignment: .center)
                     }.padding(.all, 10)
                     
                     NavigationLink(destination: NutrientView()){
@@ -45,6 +57,7 @@ struct ContentView: View {
                                 .frame(width: 250.0)
                                 .background(Color.blue)
                                 .cornerRadius(10)
+                                .frame(maxWidth: .infinity, alignment: .center)
                     }.padding(.all, 10)
                     
                     NavigationLink(destination: RecommendationView()){
@@ -56,6 +69,7 @@ struct ContentView: View {
                                 .frame(width: 250.0)
                                 .background(Color.blue)
                                 .cornerRadius(10)
+                                .frame(maxWidth: .infinity, alignment: .center)
                     }.padding(.all, 10)
                     
                     NavigationLink(destination: PreferencesView()){
@@ -67,12 +81,14 @@ struct ContentView: View {
                                 .frame(width: 250.0)
                                 .background(Color.blue)
                                 .cornerRadius(10)
+                                .frame(maxWidth: .infinity, alignment: .center)
                     }.padding(.all, 10)
                 }
             }
             .edgesIgnoringSafeArea(.all)
             .navigationBarTitle("Dashboard", displayMode: .inline)
         }
+        
     }
 }
 
@@ -83,12 +99,14 @@ struct ContentView_Previews: PreviewProvider {
 }
 
 class starting : ObservableObject {
-    @Published var user_profile = [UserProfile]()
+    @Published var user_profile: UserProfile
     @Published var total_values = [TotalValues]()
     @Published var max_values = [MaxValues]()
     
     init(){
         // grab whatever you can and add to user profile
+        user_profile = UserProfile(id: "id", first_name: "John", last_name: "Doe", age: 20, gender: "Male", allergies: [String](), health_options: [String]())
+        
     }
 }
 
