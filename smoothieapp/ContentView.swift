@@ -100,13 +100,18 @@ struct ContentView_Previews: PreviewProvider {
 
 class starting : ObservableObject {
     @Published var user_profile: UserProfile
-    @Published var total_values = [TotalValues]()
-    @Published var max_values = [MaxValues]()
+    @Published var total_values: TotalValues
+    @Published var max_values: MaxValues
     
     init(){
         // grab whatever you can and add to user profile
+        // HARDCODED VALUES
         user_profile = UserProfile(id: "id", first_name: "John", last_name: "Doe", age: 20, gender: "Male", allergies: [String](), health_options: [String]())
+            
+        total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
+        
+        max_values = MaxValues(id: "id", calcium: 100.0, fiber: 100.0, iron: 100.0, magnesium: 100.0, potassium: 100.0, protein: 100.0, vitaminA: 100.0, vitaminB12: 100.0, vitaminC: 100.0, vitaminD: 100.0, vitaminE: 100.0, vitaminK: 100.0, zinc: 100.0)
     }
 }
 
