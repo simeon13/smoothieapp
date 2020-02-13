@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var userInfo = starting()
+    @EnvironmentObject var userInfo : userSettings
     
     var body: some View {
         NavigationView{
@@ -98,7 +98,7 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
-class starting : ObservableObject {
+class userSettings : ObservableObject {
     @Published var user_profile: UserProfile
     @Published var total_values: TotalValues
     @Published var max_values: MaxValues
