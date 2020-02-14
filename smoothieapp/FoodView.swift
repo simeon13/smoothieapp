@@ -81,7 +81,7 @@ struct FoodView: View {
 
 struct FoodView_Previews: PreviewProvider {
     static var previews: some View {
-        FoodView()
+        FoodView().environmentObject(userSettings())
     }
 }
 
