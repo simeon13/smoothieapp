@@ -15,13 +15,14 @@ struct NutrientView: View {
         VStack(spacing: 20){
             HStack(){
                 ZStack(){
+
                     Circle()
                         .trim(from: 0.0, to: 0.5)
                         .stroke(Color.gray, style: StrokeStyle(lineWidth: 12.0, dash: [8]))
                         .frame(width: 200, height: 200)
                         .rotationEffect(Angle(degrees: -180))
                     Circle()
-                        .trim(from: 0.0, to: userInfo.total_values.calcium/userInfo.max_values.calcium)
+                        .trim(from: 0.0, to: (userInfo.total_values.calcium)/(userInfo.max_values.calcium))
                         .stroke(Color.blue, lineWidth: 12.0)
                         .frame(width: 200, height: 200)
                         .rotationEffect(Angle(degrees: -180))
@@ -29,6 +30,7 @@ struct NutrientView: View {
                 
             }
         }
+        .navigationBarTitle("Nutrient Levels", displayMode: .inline)
     }
 }
 
