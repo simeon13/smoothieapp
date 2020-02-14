@@ -86,7 +86,7 @@ struct ContentView: View {
                 }
             }
             .edgesIgnoringSafeArea(.all)
-            .navigationBarTitle("Dashboard", displayMode: .inline)
+            .navigationBarTitle("Home", displayMode: .inline)
         }
         
     }

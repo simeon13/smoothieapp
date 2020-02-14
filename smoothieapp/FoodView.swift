@@ -76,6 +76,7 @@ struct FoodView: View {
             .navigationBarTitle("Items")
             .listStyle(GroupedListStyle())
         }
+        .navigationBarTitle("Food Database", displayMode: .inline)
     }
 }
 
