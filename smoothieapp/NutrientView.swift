@@ -34,6 +34,6 @@ struct NutrientView: View {
 
 struct NutrientView_Previews: PreviewProvider {
     static var previews: some View {
-        NutrientView()
+        NutrientView().environmentObject(userSettings())
     }
 }

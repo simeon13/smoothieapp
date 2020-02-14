@@ -16,6 +16,6 @@ struct RecommendationView: View {
 
 struct RecommendationView_Previews: PreviewProvider {
     static var previews: some View {
-        RecommendationView()
+        RecommendationView().environmentObject(userSettings())
     }
 }
