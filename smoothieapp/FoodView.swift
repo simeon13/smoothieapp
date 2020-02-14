@@ -131,19 +131,19 @@ class observer : ObservableObject {
                 for child in snapshot.children.allObjects as! [DataSnapshot] {
                     let value = child.value as? NSDictionary
                     let name = child.key.capitalized
-                    let calcium = value?["calcium"] as? Double ?? 0.0
-                    let fiber = value?["fiber"] as? Double ?? 0.0
-                    let iron = value?["iron"] as? Double ?? 0
-                    let magnesium = value?["magnesium"] as? Double ?? 0
-                    let potassium = value?["potassium"] as? Double ?? 0
-                    let protein = value?["protein"] as? Double ?? 0
-                    let vitaminA = value?["vitaminA"] as? Double ?? 0
-                    let vitaminB12 = value?["vitaminB12"] as? Double ?? 0
-                    let vitaminC = value?["vitaminC"] as? Double ?? 0
-                    let vitaminD = value?["vitaminD"] as? Double ?? 0
-                    let vitaminE = value?["vitaminE"] as? Double ?? 0
-                    let vitaminK = value?["vitaminK"] as? Double ?? 0
-                    let zinc = value?["zinc"] as? Double ?? 0
+                    let calcium = value?["calcium"] as? CGFloat ?? 0.0
+                    let fiber = value?["fiber"] as? CGFloat ?? 0.0
+                    let iron = value?["iron"] as? CGFloat ?? 0
+                    let magnesium = value?["magnesium"] as? CGFloat ?? 0
+                    let potassium = value?["potassium"] as? CGFloat ?? 0
+                    let protein = value?["protein"] as? CGFloat ?? 0
+                    let vitaminA = value?["vitaminA"] as? CGFloat ?? 0
+                    let vitaminB12 = value?["vitaminB12"] as? CGFloat ?? 0
+                    let vitaminC = value?["vitaminC"] as? CGFloat ?? 0
+                    let vitaminD = value?["vitaminD"] as? CGFloat ?? 0
+                    let vitaminE = value?["vitaminE"] as? CGFloat ?? 0
+                    let vitaminK = value?["vitaminK"] as? CGFloat ?? 0
+                    let zinc = value?["zinc"] as? CGFloat ?? 0
                     // create new foodItem object
                     let food_item = FoodItem(id: name, name: name, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
                     if (entry == "Vegetables"){
@@ -166,6 +166,31 @@ class observer : ObservableObject {
                     }
                 }
             })
+        }
+        
+        // testing use of dictionary
+        // can be deleted, im playing around with it.
+        var testFoodDict = [String: String]()
+        
+        for entry in food_list {
+                   let food_ref = Database.database().reference(withPath: entry)
+                   food_ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                       for child in snapshot.children.allObjects as! [DataSnapshot] {
+                        let nutritionInfo = child.value as? NSDictionary
+                        
+                        
+                        let nutrients = nutritionInfo?.allKeys as! [String]
+                        
+                        
+                        for nutrient in nutrients{
+                            nutritionInfo?[nutrient]
+                            
+                        }
+                        
+                        
+                    }
+            })
+            
         }
         
     }
@@ -208,21 +233,24 @@ struct Recipe : Identifiable {
 struct FoodItemView: View {
     var foodItem : FoodItem
     var body: some View {
-        List{
-            Text("Calcium: " + String(foodItem.calcium))
-            Text("Fiber: " + String(foodItem.fiber))
-            Text("Iron: " + String(foodItem.iron))
-            Text("Potassium: " + String(foodItem.potassium))
-            Text("Protein: " + String(foodItem.protein))
-            Text("Vitamin A: " + String(foodItem.vitaminA))
-            Text("Vitamin B12: " + String(foodItem.vitaminB12))
-            Text("Vitamin C: " + String(foodItem.vitaminC))
-            Text("Vitamin D: " + String(foodItem.vitaminD))
-            Text("Vitamin E: " + String(foodItem.vitaminE))
+        VStack{
+            Group{
+                Text("Calcium: " + foodItem.fiber.description)
+                Text("Fiber: " + foodItem.fiber.description)
+                Text("Iron: " + foodItem.iron.description)
+                Text("Potassium: " +  foodItem.potassium.description)
+                Text("Protein: " +  foodItem.protein.description)
+                Text("Vitamin A: " +  foodItem.vitaminA.description)
+                Text("Vitamin B12: " +  foodItem.vitaminB12.description)
+                Text("Vitamin C: " +  foodItem.vitaminC.description)
+                Text("Vitamin D: " +  foodItem.vitaminD.description)
+                }
             
-            // not sure why but these cause errors
-            //Text("Vitamin K: " + String(foodItem.vitaminK))
-            //Text("Zinc: " + String(foodItem.zinc))
+            Group{
+                Text("Vitamin E: " +  foodItem.vitaminE.description)
+                Text("Vitamin K: " + foodItem.vitaminK.description)
+                Text("Zinc: " + foodItem.zinc.description)
+            }
         }
         }
 }
@@ -237,17 +265,17 @@ struct FoodItemRow: View {
 struct FoodItem : Identifiable {
     var id : String
     var name : String
-    var calcium : Double
-    var fiber : Double
-    var iron : Double
-    var magnesium : Double
-    var potassium : Double
-    var protein : Double
-    var vitaminA : Double
-    var vitaminB12 : Double
-    var vitaminC : Double
-    var vitaminD : Double
-    var vitaminE : Double
-    var vitaminK : Double
-    var zinc : Double
+    var calcium : CGFloat
+    var fiber : CGFloat
+    var iron : CGFloat
+    var magnesium : CGFloat
+    var potassium : CGFloat
+    var protein : CGFloat
+    var vitaminA : CGFloat
+    var vitaminB12 : CGFloat
+    var vitaminC : CGFloat
+    var vitaminD : CGFloat
+    var vitaminE : CGFloat
+    var vitaminK : CGFloat
+    var zinc : CGFloat
 }
