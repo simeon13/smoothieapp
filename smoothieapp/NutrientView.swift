@@ -42,7 +42,7 @@ struct NutrientView: View {
                     
                     progressBar(total: $userInfo.total_values.zinc, max: $userInfo.max_values.zinc, name: $zinc)
                 }
-                Divider()
+
                 Group {
                     progressBar(total: $userInfo.total_values.vitaminA, max: $userInfo.max_values.vitaminA, name: $vitaminA)
 
