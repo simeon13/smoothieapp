@@ -86,10 +86,23 @@ struct progressBar : View {
                     .padding(.top, 10.0)
 
             }
-            Text("\(name): \(total) / \(max)")
-                .padding(.leading, 35.0)
-                .padding(.bottom, 15.0)
-                .frame(maxWidth: .infinity, alignment: .leading)
+            HStack {
+                Text("\(name):")
+                    .padding(.leading, 35.0)
+                    .padding(.bottom, 15.0)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                Text(format(total: total, max: max))
+                    .padding(.trailing, 35.0)
+                    .padding(.bottom, 15.0)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                
+            }
         }
     }
+}
+
+func format(total: CGFloat, max: CGFloat) -> String{
+    let formatted = String(format: "%.2f / %.f", total, max)
+    return formatted
 }
