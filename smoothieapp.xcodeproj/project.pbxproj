@@ -15,7 +15,7 @@
 		152F2E0723D192C80032977F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 152F2E0523D192C80032977F /* LaunchScreen.storyboard */; };
 		152F2E1223D192C80032977F /* smoothieappTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152F2E1123D192C80032977F /* smoothieappTests.swift */; };
 		152F2E1D23D192C80032977F /* smoothieappUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152F2E1C23D192C80032977F /* smoothieappUITests.swift */; };
-		155E62B423F74BA600A78967 /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155E62B323F74BA600A78967 /* WeeklyView.swift */; };
+		155E62B623F74F8500A78967 /* WeeklyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 155E62B523F74F8500A78967 /* WeeklyView.swift */; };
 		15BB579323D54314000FE042 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 15BB579223D54314000FE042 /* GoogleService-Info.plist */; };
 		15C7E01523E8D234004BACFD /* FoodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C7E01423E8D233004BACFD /* FoodView.swift */; };
 		15C7E01723E8D24A004BACFD /* NutrientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C7E01623E8D24A004BACFD /* NutrientView.swift */; };
@@ -60,7 +60,7 @@
 		152F2E1C23D192C80032977F /* smoothieappUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = smoothieappUITests.swift; sourceTree = "<group>"; };
 		152F2E1E23D192C80032977F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		152F2E2E23D193070032977F /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		155E62B323F74BA600A78967 /* WeeklyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WeeklyView.swift; path = ../../../Downloads/WeeklyView.swift; sourceTree = "<group>"; };
+		155E62B523F74F8500A78967 /* WeeklyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyView.swift; sourceTree = "<group>"; };
 		15BB579223D54314000FE042 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "smoothieapp/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		15C7E01423E8D233004BACFD /* FoodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodView.swift; sourceTree = "<group>"; };
 		15C7E01623E8D24A004BACFD /* NutrientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientView.swift; sourceTree = "<group>"; };
@@ -135,7 +135,7 @@
 				152F2DFE23D192C70032977F /* ContentView.swift */,
 				15C7E01423E8D233004BACFD /* FoodView.swift */,
 				15C7E01623E8D24A004BACFD /* NutrientView.swift */,
-				155E62B323F74BA600A78967 /* WeeklyView.swift */,
+				155E62B523F74F8500A78967 /* WeeklyView.swift */,
 				15C7E01823E8D270004BACFD /* RecommendationView.swift */,
 				15C7E01A23E8D291004BACFD /* PreferencesView.swift */,
 				152F2E0023D192C80032977F /* Assets.xcassets */,
@@ -443,7 +443,7 @@
 				152F2DFF23D192C70032977F /* ContentView.swift in Sources */,
 				15C7E01923E8D270004BACFD /* RecommendationView.swift in Sources */,
 				15C7E01B23E8D291004BACFD /* PreferencesView.swift in Sources */,
-				155E62B423F74BA600A78967 /* WeeklyView.swift in Sources */,
+				155E62B623F74F8500A78967 /* WeeklyView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
