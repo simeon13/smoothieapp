@@ -127,34 +127,34 @@ struct UserProfile : Identifiable {
 
 struct TotalValues : Identifiable {
     var id : String
-    var calcium : Double
-    var fiber : Double
-    var iron : Double
-    var magnesium : Double
-    var potassium : Double
-    var protein : Double
-    var vitaminA : Double
-    var vitaminB12 : Double
-    var vitaminC : Double
-    var vitaminD : Double
-    var vitaminE : Double
-    var vitaminK : Double
-    var zinc : Double
+    var calcium : CGFloat
+    var fiber : CGFloat
+    var iron : CGFloat
+    var magnesium : CGFloat
+    var potassium : CGFloat
+    var protein : CGFloat
+    var vitaminA : CGFloat
+    var vitaminB12 : CGFloat
+    var vitaminC : CGFloat
+    var vitaminD : CGFloat
+    var vitaminE : CGFloat
+    var vitaminK : CGFloat
+    var zinc : CGFloat
 }
 
 struct MaxValues : Identifiable {
     var id : String
-    var calcium : Double
-    var fiber : Double
-    var iron : Double
-    var magnesium : Double
-    var potassium : Double
-    var protein : Double
-    var vitaminA : Double
-    var vitaminB12 : Double
-    var vitaminC : Double
-    var vitaminD : Double
-    var vitaminE : Double
-    var vitaminK : Double
-    var zinc : Double
+    var calcium : CGFloat
+    var fiber : CGFloat
+    var iron : CGFloat
+    var magnesium : CGFloat
+    var potassium : CGFloat
+    var protein : CGFloat
+    var vitaminA : CGFloat
+    var vitaminB12 : CGFloat
+    var vitaminC : CGFloat
+    var vitaminD : CGFloat
+    var vitaminE : CGFloat
+    var vitaminK : CGFloat
+    var zinc : CGFloat
 }
