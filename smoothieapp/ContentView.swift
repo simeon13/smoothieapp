@@ -22,6 +22,7 @@ struct ContentView: View {
                         .fontWeight(.bold)
                         .foregroundColor(Color.blue)
                         .padding([.leading, .bottom, .trailing], 10.0)
+                        .padding(.top, 50.0)
                         .frame(maxWidth: .infinity, alignment: .center)
                     Divider()
                     .frame(height: 5.0)
@@ -59,6 +60,19 @@ struct ContentView: View {
                                 .cornerRadius(10)
                                 .frame(maxWidth: .infinity, alignment: .center)
                     }.padding(.all, 10)
+                    
+                    NavigationLink(destination: WeeklyView()){
+                            Text("Weekly Nutrients")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color.white)
+                                .padding(.all)
+                                .frame(width: 250.0)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                    }.padding(.all, 10)
+                    
                     
                     NavigationLink(destination: RecommendationView()){
                             Text("Recommendations")
