@@ -132,19 +132,19 @@ class observer : ObservableObject {
                 for child in snapshot.children.allObjects as! [DataSnapshot] {
                     let value = child.value as? NSDictionary
                     let name = child.key.capitalized
-                    let calcium = value?["calcium"] as? Double ?? 0.0
-                    let fiber = value?["fiber"] as? Double ?? 0.0
-                    let iron = value?["iron"] as? String ?? ""
-                    let magnesium = value?["magnesium"] as? String ?? ""
-                    let potassium = value?["potassium"] as? String ?? ""
-                    let protein = value?["protein"] as? String ?? ""
-                    let vitaminA = value?["vitaminA"] as? String ?? ""
-                    let vitaminB12 = value?["vitaminB12"] as? String ?? ""
-                    let vitaminC = value?["vitaminC"] as? String ?? ""
-                    let vitaminD = value?["vitaminD"] as? String ?? ""
-                    let vitaminE = value?["vitaminE"] as? String ?? ""
-                    let vitaminK = value?["vitaminK"] as? String ?? ""
-                    let zinc = value?["zinc"] as? String ?? ""
+                    let calcium = value?["calcium"] as? CGFloat ?? 0.0
+                    let fiber = value?["fiber"] as? CGFloat ?? 0.0
+                    let iron = value?["iron"] as? CGFloat ?? 0
+                    let magnesium = value?["magnesium"] as? CGFloat ?? 0
+                    let potassium = value?["potassium"] as? CGFloat ?? 0
+                    let protein = value?["protein"] as? CGFloat ?? 0
+                    let vitaminA = value?["vitaminA"] as? CGFloat ?? 0
+                    let vitaminB12 = value?["vitaminB12"] as? CGFloat ?? 0
+                    let vitaminC = value?["vitaminC"] as? CGFloat ?? 0
+                    let vitaminD = value?["vitaminD"] as? CGFloat ?? 0
+                    let vitaminE = value?["vitaminE"] as? CGFloat ?? 0
+                    let vitaminK = value?["vitaminK"] as? CGFloat ?? 0
+                    let zinc = value?["zinc"] as? CGFloat ?? 0
                     // create new foodItem object
                     let food_item = FoodItem(id: name, name: name, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
                     if (entry == "Vegetables"){
@@ -167,6 +167,31 @@ class observer : ObservableObject {
                     }
                 }
             })
+        }
+        
+        // testing use of dictionary
+        // can be deleted, im playing around with it.
+        var testFoodDict = [String: String]()
+        
+        for entry in food_list {
+                   let food_ref = Database.database().reference(withPath: entry)
+                   food_ref.observeSingleEvent(of: .value, with: { (snapshot) in
+                       for child in snapshot.children.allObjects as! [DataSnapshot] {
+                        let nutritionInfo = child.value as? NSDictionary
+                        
+                        
+                        let nutrients = nutritionInfo?.allKeys as! [String]
+                        
+                        
+                        for nutrient in nutrients{
+                            nutritionInfo?[nutrient]
+                            
+                        }
+                        
+                        
+                    }
+            })
+            
         }
         
     }
@@ -209,17 +234,24 @@ struct Recipe : Identifiable {
 struct FoodItemView: View {
     var foodItem : FoodItem
     var body: some View {
-        List{
-            Text("Calcium: " + String(foodItem.calcium))
-            Text("Fiber: " + String(foodItem.fiber))
-            Text("Fiber: " + String(foodItem.iron))
-            Text("Fiber: " + String(foodItem.magnesium))
-            Text("Fiber: " + String(foodItem.potassium))
-            Text("Fiber: " + String(foodItem.protein))
-            Text("Fiber: " + String(foodItem.vitaminA))
-            Text("Fiber: " + String(foodItem.vitaminB12))
-            Text("Fiber: " + String(foodItem.fiber))
+        VStack{
+            Group{
+                Text("Calcium: " + foodItem.fiber.description)
+                Text("Fiber: " + foodItem.fiber.description)
+                Text("Iron: " + foodItem.iron.description)
+                Text("Potassium: " +  foodItem.potassium.description)
+                Text("Protein: " +  foodItem.protein.description)
+                Text("Vitamin A: " +  foodItem.vitaminA.description)
+                Text("Vitamin B12: " +  foodItem.vitaminB12.description)
+                Text("Vitamin C: " +  foodItem.vitaminC.description)
+                Text("Vitamin D: " +  foodItem.vitaminD.description)
+                }
             
+            Group{
+                Text("Vitamin E: " +  foodItem.vitaminE.description)
+                Text("Vitamin K: " + foodItem.vitaminK.description)
+                Text("Zinc: " + foodItem.zinc.description)
+            }
         }
         }
 }
@@ -234,17 +266,17 @@ struct FoodItemRow: View {
 struct FoodItem : Identifiable {
     var id : String
     var name : String
-    var calcium : Double
-    var fiber : Double
-    var iron : String
-    var magnesium : String
-    var potassium : String
-    var protein : String
-    var vitaminA : String
-    var vitaminB12 : String
-    var vitaminC : String
-    var vitaminD : String
-    var vitaminE : String
-    var vitaminK : String
-    var zinc : String
+    var calcium : CGFloat
+    var fiber : CGFloat
+    var iron : CGFloat
+    var magnesium : CGFloat
+    var potassium : CGFloat
+    var protein : CGFloat
+    var vitaminA : CGFloat
+    var vitaminB12 : CGFloat
+    var vitaminC : CGFloat
+    var vitaminD : CGFloat
+    var vitaminE : CGFloat
+    var vitaminK : CGFloat
+    var zinc : CGFloat
 }
