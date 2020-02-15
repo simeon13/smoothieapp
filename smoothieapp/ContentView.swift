@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView{
             ZStack {
-                Color.gray.opacity(0.3)
+                Color.pink.opacity(0.15)
             
                 VStack(alignment: .leading) {
                     Text("Smoothie Genie")
@@ -116,6 +116,7 @@ class userSettings : ObservableObject {
     @Published var user_profile: UserProfile
     @Published var total_values: TotalValues
     @Published var max_values: MaxValues
+    @Published var nutrient_units : NutrientUnits
     
     init(){
         // grab whatever you can and add to user profile
@@ -125,7 +126,9 @@ class userSettings : ObservableObject {
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
         
-        max_values = MaxValues(id: "id", calcium: 100.0, fiber: 100.0, iron: 100.0, magnesium: 100.0, potassium: 100.0, protein: 100.0, vitaminA: 100.0, vitaminB12: 100.0, vitaminC: 100.0, vitaminD: 100.0, vitaminE: 100.0, vitaminK: 100.0, zinc: 100.0)
+        max_values = MaxValues(id: "id", calcium: 1000.0, fiber: 28.0, iron: 18.0, magnesium: 310.0, potassium: 4700.0, protein: 46.0, vitaminA: 700, vitaminB12: 2.4, vitaminC: 75.0, vitaminD: 600.0, vitaminE: 15.0, vitaminK: 90.0, zinc: 8.0)
+        
+        nutrient_units =  NutrientUnits(id: "id", calcium: "mg", fiber: "g", iron: "mg", magnesium: "mg", potassium: "mg", protein: "g", vitaminA: "µg", vitaminB12: "µg", vitaminC: "mg", vitaminD: "IU", vitaminE: "mg", vitaminK: "µg", zinc: "mg")
     }
 }
 
@@ -171,4 +174,21 @@ struct MaxValues : Identifiable {
     var vitaminE : CGFloat
     var vitaminK : CGFloat
     var zinc : CGFloat
+}
+
+struct NutrientUnits : Identifiable {
+    var id: String
+    var calcium : String
+    var fiber : String
+    var iron : String
+    var magnesium : String
+    var potassium : String
+    var protein : String
+    var vitaminA : String
+    var vitaminB12 : String
+    var vitaminC : String
+    var vitaminD : String
+    var vitaminE : String
+    var vitaminK : String
+    var zinc : String
 }
