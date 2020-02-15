@@ -86,7 +86,7 @@ struct progressBar : View {
                     .padding(.top, 10.0)
                 RoundedRectangle(cornerRadius: 20)
                     .foregroundColor(.blue)
-                    .frame(width: 300*(total/max), height: 10)
+                    .frame(width: min(300*(total/max), 300), height: 10)
                     .padding(.top, 10.0)
 
             }
