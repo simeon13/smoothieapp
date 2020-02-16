@@ -9,9 +9,18 @@
 import SwiftUI
 
 struct RecommendationView: View {
+    @EnvironmentObject var userInfo : userSettings
+
     var body: some View {
-        VStack(){
-            Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List {
+                Section (header: Text("Current Recommendations")){
+                    ForEach(userInfo.user_profile.recommendations.indices, id: \.self){i in
+                        Text("\(i+1) - \(self.userInfo.user_profile.recommendations[i].name)")
+                    }
+                }
+            }
+            .navigationBarTitle("Notifications")
         }
         .navigationBarTitle("Recommendations", displayMode: .inline)
     }
