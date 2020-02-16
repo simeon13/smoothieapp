@@ -121,7 +121,7 @@ class userSettings : ObservableObject {
     init(){
         // grab whatever you can and add to user profile
         // HARDCODED VALUES
-        user_profile = UserProfile(id: "id", first_name: "John", last_name: "Doe", age: 20, gender: "Male", allergies: [String](), health_options: [String]())
+        user_profile = UserProfile(id: "id", first_name: "John", last_name: "Doe", age: 20, gender: "Male", allergies: [String](), health_options: [String](), recommendations: [Recipe]())
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
@@ -132,6 +132,11 @@ class userSettings : ObservableObject {
     }
 }
 
+struct testRecipe : Identifiable {
+    var id : String
+    var name : String
+}
+
 struct UserProfile : Identifiable {
     var id : String
     var first_name : String
@@ -140,6 +145,7 @@ struct UserProfile : Identifiable {
     var gender : String
     var allergies : [String]
     var health_options : [String]
+    var recommendations : [Recipe]
 }
 
 struct TotalValues : Identifiable {
