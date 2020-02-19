@@ -8,6 +8,7 @@
 
 import SwiftUI
 import HealthKit
+import CloudKit
 
 struct ContentView: View {
     @EnvironmentObject var userInfo : userSettings
@@ -122,9 +123,12 @@ class userSettings : ObservableObject {
     
     init(){
         // grab age, gender, first name, and last name
-        var age = 18
-        var gender = 0
+        var age = 0 // push notification if still 0
+        var gender = 0 // push notification if still 0
+        var first_name = ""
+        var last_name = ""
         
+        // HEALTH KIT
         if HKHealthStore.isHealthDataAvailable() {
             // Add code to use HealthKit here.
             let healthStore = HKHealthStore()
@@ -157,7 +161,7 @@ class userSettings : ObservableObject {
             }
         }
         
-        user_profile = UserProfile(id: "id", first_name: "John", last_name: "Doe", age: age, gender: gender, allergies: [String](), health_options: [String](), recommendations: [Recipe]())
+        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: gender, allergies: [String](), health_options: [String](), recommendations: [Recipe]())
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
