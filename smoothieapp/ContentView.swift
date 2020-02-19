@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 struct ContentView: View {
     @EnvironmentObject var userInfo : userSettings
@@ -112,6 +113,7 @@ struct ContentView_Previews: PreviewProvider {
     }
 }
 
+
 class userSettings : ObservableObject {
     @Published var user_profile: UserProfile
     @Published var total_values: TotalValues
@@ -119,9 +121,43 @@ class userSettings : ObservableObject {
     @Published var nutrient_units : NutrientUnits
     
     init(){
-        // grab whatever you can and add to user profile
-        // HARDCODED VALUES
-        user_profile = UserProfile(id: "id", first_name: "John", last_name: "Doe", age: 20, gender: "Male", allergies: [String](), health_options: [String](), recommendations: [Recipe]())
+        // grab age, gender, first name, and last name
+        var age = 18
+        var gender = 0
+        
+        if HKHealthStore.isHealthDataAvailable() {
+            // Add code to use HealthKit here.
+            let healthStore = HKHealthStore()
+            // get permission
+            let dateOfBirth = HKObjectType.characteristicType(forIdentifier: .dateOfBirth)
+            let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex)
+            
+            let healthKitTypesToWrite: Set<HKSampleType> = []
+            let healthKitTypesToRead: Set<HKObjectType> = [dateOfBirth!,
+                                                           biologicalSex!]
+
+            healthStore.requestAuthorization(toShare: healthKitTypesToWrite, read: healthKitTypesToRead) { (success, error) in
+                if !success {
+                    print("Error")
+                }
+            }
+            
+            do {
+                let birthdayComponents =  try healthStore.dateOfBirthComponents()
+                gender = try healthStore.biologicalSex().biologicalSex.rawValue
+                
+                //2. Use Calendar to calculate age.
+                let today = Date()
+                let calendar = Calendar.current
+                let todayDateComponents = calendar.dateComponents([.year], from: today)
+                let thisYear = todayDateComponents.year!
+                age = thisYear - birthdayComponents.year!
+            } catch {
+                print(error)
+            }
+        }
+        
+        user_profile = UserProfile(id: "id", first_name: "John", last_name: "Doe", age: age, gender: gender, allergies: [String](), health_options: [String](), recommendations: [Recipe]())
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
@@ -142,7 +178,7 @@ struct UserProfile : Identifiable {
     var first_name : String
     var last_name : String
     var age : Int
-    var gender : String
+    var gender : Int
     var allergies : [String]
     var health_options : [String]
     var recommendations : [Recipe]
