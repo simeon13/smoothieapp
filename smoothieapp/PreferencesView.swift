@@ -12,22 +12,25 @@ struct PreferencesView: View {
     @EnvironmentObject var userInfo: userSettings
     @State var options: [String] = ["Vegan", "Balanced", "Vegetarian", "Tree-Nut-Free", "Low-Carb", "Peanut-Free", "Low-Fat"]
     @State var selections: [String] = []
-    @State var selection = 1
-    @State var name = ""
+    @State var gender = 1
+    @State var firstName = ""
+    @State var lastName = ""
     @State var allergies = ""
     @State var healthoptions = ""
-    @State var age = ""
+    @State var age = 0
     @State var save = false
+    
     var body: some View {
         NavigationView {
             Form {
                 Section {
-                TextField("Your name", text: $name)
-                Picker(selection: $selection, label: Text("Gender")) {
+                TextField("Your first name", text: $firstName)
+                TextField("Your last name", text: $lastName)
+                    Picker(selection: $gender, label: Text("Gender")) {
                     Text("Male").tag(1)
                     Text("Female").tag(2)
                 }
-                TextField("Age", text: $age)
+                TextField("Age", int: $age)
                 }
                 List {
                     Section(header: Text("Health Options")) {
@@ -47,6 +50,10 @@ struct PreferencesView: View {
                 Section {
                 Button(action: {self.save.toggle()}) {
                     Text("Save")
+                    self.userInfo.user_profile.first_name = firstName
+                    self.userInfo.user_profile.last_name = lastName
+                    self.userInfo.user_profile.age = age
+                    self.userInfo.user_profile.health_options = selections
                 }
                 }
             }.navigationBarTitle("Preferences")
