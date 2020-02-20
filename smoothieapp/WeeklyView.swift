@@ -9,6 +9,11 @@ import SwiftUI
 
 struct WeeklyView: View {
     @State var pickerselection = 0
+    @State var nutrients : [String] = [
+    "Vitamin-A", "Vitamin-B12", "Vitamin-C", "Vitamin-D",
+    "Vitamin-E", "Vitamin-K", "Calcium", "Fiber",
+    "Iron", "Magnesium", "Potassium", "Protein",
+    "Zinc"]
     @State var values : [[CGFloat]] = [
     [5,150,50,100,200,110,30,170,50],
     [200,110,30,170,50, 100,100,100,200],
@@ -70,7 +75,9 @@ struct WeeklyView: View {
                         BarView(value: data, cornerRadius: CGFloat(integerLiteral: 1*self.pickerselection))
                     }
                 }.padding(.top, 24).animation(.default)
-                
+                Text(nutrients[pickerselection])
+                    .font(.title)
+                    .foregroundColor(Color.white)
             }
         }
     }
