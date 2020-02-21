@@ -10,6 +10,7 @@ import SwiftUI
 import FirebaseDatabase
 
 struct FoodView: View {
+    @EnvironmentObject var userInfo : userSettings
     @ObservedObject var data = observer()
     
     var body: some View {
@@ -19,7 +20,11 @@ struct FoodView: View {
                 Section(header: Text("Recipes")) {
                     ForEach(data.recipe_data){i in
                         NavigationLink(destination: RecipeView(recipe: i)) {
+                            Button("add"){}
                             RecipeRow(recipe: i)
+                            
+                            
+                          
                         }
                     }
                 }
@@ -28,6 +33,7 @@ struct FoodView: View {
                 Section(header: Text("Vegetables")) {
                     ForEach(data.vegetable_data){i in
                         NavigationLink(destination: FoodItemView(foodItem: i)) {
+                            
                             FoodItemRow(foodItem: i)
                         }
                     }
@@ -233,10 +239,11 @@ struct Recipe : Identifiable {
 
 struct FoodItemView: View {
     var foodItem : FoodItem
+    @EnvironmentObject var userInfo : userSettings
     var body: some View {
         VStack{
             Group{
-                Text("Calcium: " + foodItem.fiber.description)
+                Text("Calcium: " + foodItem.calcium.description)
                 Text("Fiber: " + foodItem.fiber.description)
                 Text("Iron: " + foodItem.iron.description)
                 Text("Potassium: " +  foodItem.potassium.description)
@@ -251,6 +258,11 @@ struct FoodItemView: View {
                 Text("Vitamin E: " +  foodItem.vitaminE.description)
                 Text("Vitamin K: " + foodItem.vitaminK.description)
                 Text("Zinc: " + foodItem.zinc.description)
+                Button(action: {
+                    self.userInfo.total_values.calcium += self.foodItem.calcium
+                    }){
+                    Text("aadd")
+                }
             }
         }
         }
@@ -262,6 +274,8 @@ struct FoodItemRow: View {
         Text(foodItem.name)
     }
 }
+
+
 
 struct FoodItem : Identifiable {
     var id : String
