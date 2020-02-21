@@ -12,54 +12,47 @@ struct PreferencesView: View {
     @EnvironmentObject var userInfo: userSettings
     @State var options: [String] = ["Vegan", "Balanced", "Vegetarian", "Tree-Nut-Free", "Low-Carb", "Peanut-Free", "Low-Fat"]
     @State var selections: [String] = []
-    @State var gender = 1
-    @State var firstName = ""
-    @State var lastName = ""
     @State var allergies = ""
     @State var healthoptions = ""
-    @State var age = 0
-    @State var save = false
     
     var body: some View {
         NavigationView {
-            Form {
-                Section {
-                TextField("Your first name", text: $firstName)
-                TextField("Your last name", text: $lastName)
-                    Picker(selection: $gender, label: Text("Gender")) {
-                    Text("Male").tag(1)
-                    Text("Female").tag(2)
-                }
-                TextField("Age", int: $age)
-                }
-                List {
-                    Section(header: Text("Health Options")) {
-                        ForEach(self.options, id: \.self) { item in
-                            MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
-                                if self.selections.contains(item) {
-                                    self.selections.removeAll(where: { $0 == item })
-                                }
-                                else {
-                                    self.selections.append(item)
+                Form {
+                    Section (header: Text("Personal Info")) {
+                        TextField("Your first name", text: $userInfo.user_profile.first_name)
+                        TextField("Your last name", text: $userInfo.user_profile.last_name)
+                        Picker("Gender", selection: $userInfo.user_profile.gender) {
+                            Text("Female").tag(0)
+                            Text("Male").tag(1)
+                        }
+                        
+                        // convert age to string
+                        Picker("Age", selection: $userInfo.user_profile.age) {
+                            ForEach(13..<100) { i in
+                                Text(String(i))
+                            }
+                        }
+                    }
+                    
+                    List {
+                        Section(header: Text("Health Options")) {
+                            ForEach(self.options, id: \.self) { item in
+                                MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
+                                    if self.selections.contains(item) {
+                                        self.selections.removeAll(where: { $0 == item })
+                                    }
+                                    else {
+                                        self.selections.append(item)
+                                    }
                                 }
                             }
                         }
                     }
-                }
-
-                Section {
-                Button(action: {self.save.toggle()}) {
-                    Text("Save")
-                    self.userInfo.user_profile.first_name = firstName
-                    self.userInfo.user_profile.last_name = lastName
-                    self.userInfo.user_profile.age = age
-                    self.userInfo.user_profile.health_options = selections
-                }
-                }
             }.navigationBarTitle("Preferences")
         }
     }
 }
+    
 struct MultipleSelectionRow: View {
     var title: String
     var isSelected: Bool
@@ -77,6 +70,7 @@ struct MultipleSelectionRow: View {
         }
     }
 }
+
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
         PreferencesView().environmentObject(userSettings())

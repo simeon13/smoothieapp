@@ -22,6 +22,7 @@
 		15C7E01923E8D270004BACFD /* RecommendationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C7E01823E8D270004BACFD /* RecommendationView.swift */; };
 		15C7E01B23E8D291004BACFD /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15C7E01A23E8D291004BACFD /* PreferencesView.swift */; };
 		15D5973223FCFF1F009F0C20 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D5973123FCFF1F009F0C20 /* HealthKit.framework */; };
+		15D5973423FD1805009F0C20 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15D5973323FD1805009F0C20 /* CloudKit.framework */; };
 		2AA3111876B29DE7CE3602BE /* Pods_smoothieappTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 094B78F4DCC250115349045B /* Pods_smoothieappTests.framework */; };
 		6BE71E7EA63D7692DE66E902 /* Pods_smoothieapp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17D5A190B24D5C74FCAF4D21 /* Pods_smoothieapp.framework */; };
 		C68B2C1FDA9E20BFBA6E9795 /* Pods_smoothieapp_smoothieappUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B05F4A8A3A284BB716944BB0 /* Pods_smoothieapp_smoothieappUITests.framework */; };
@@ -69,6 +70,7 @@
 		15C7E01A23E8D291004BACFD /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		15D5973023FCFF1F009F0C20 /* smoothieapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = smoothieapp.entitlements; sourceTree = "<group>"; };
 		15D5973123FCFF1F009F0C20 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		15D5973323FD1805009F0C20 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		17D5A190B24D5C74FCAF4D21 /* Pods_smoothieapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smoothieapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		506F86D3B42FE32871EF52D1 /* Pods-smoothieapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smoothieapp.debug.xcconfig"; path = "Target Support Files/Pods-smoothieapp/Pods-smoothieapp.debug.xcconfig"; sourceTree = "<group>"; };
 		5279C669EF186AA63FFF4EF9 /* Pods-smoothieapp-smoothieappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smoothieapp-smoothieappUITests.release.xcconfig"; path = "Target Support Files/Pods-smoothieapp-smoothieappUITests/Pods-smoothieapp-smoothieappUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15D5973423FD1805009F0C20 /* CloudKit.framework in Frameworks */,
 				6BE71E7EA63D7692DE66E902 /* Pods_smoothieapp.framework in Frameworks */,
 				15D5973223FCFF1F009F0C20 /* HealthKit.framework in Frameworks */,
 			);
@@ -181,6 +184,7 @@
 		8FB71FA54ED806A773EA085D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15D5973323FD1805009F0C20 /* CloudKit.framework */,
 				15D5973123FCFF1F009F0C20 /* HealthKit.framework */,
 				17D5A190B24D5C74FCAF4D21 /* Pods_smoothieapp.framework */,
 				B05F4A8A3A284BB716944BB0 /* Pods_smoothieapp_smoothieappUITests.framework */,
