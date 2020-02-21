@@ -123,8 +123,8 @@ class userSettings : ObservableObject {
     
     init(){
         // grab age, gender, first name, and last name
-        var age = "9"
-        var str_gender = ""
+        var age = "18"
+        var str_gender = "Male"
         let first_name = ""
         let last_name = ""
         
@@ -152,8 +152,6 @@ class userSettings : ObservableObject {
                 
                 if (gender == 1){
                     str_gender = "Female"
-                } else {
-                    str_gender = "Male"
                 }
                 
                 //2. Use Calendar to calculate age.
