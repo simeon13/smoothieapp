@@ -20,7 +20,6 @@ struct FoodView: View {
                 Section(header: Text("Recipes")) {
                     ForEach(data.recipe_data){i in
                         NavigationLink(destination: RecipeView(recipe: i)) {
-                            Button("add"){}
                             RecipeRow(recipe: i)
                             
                             
@@ -33,7 +32,6 @@ struct FoodView: View {
                 Section(header: Text("Vegetables")) {
                     ForEach(data.vegetable_data){i in
                         NavigationLink(destination: FoodItemView(foodItem: i)) {
-                            
                             FoodItemRow(foodItem: i)
                         }
                     }
@@ -177,28 +175,7 @@ class observer : ObservableObject {
         
         // testing use of dictionary
         // can be deleted, im playing around with it.
-        var testFoodDict = [String: String]()
-        
-        for entry in food_list {
-                   let food_ref = Database.database().reference(withPath: entry)
-                   food_ref.observeSingleEvent(of: .value, with: { (snapshot) in
-                       for child in snapshot.children.allObjects as! [DataSnapshot] {
-                        let nutritionInfo = child.value as? NSDictionary
-                        
-                        
-                        let nutrients = nutritionInfo?.allKeys as! [String]
-                        
-                        
-                        for nutrient in nutrients{
-                            nutritionInfo?[nutrient]
-                            
-                        }
-                        
-                        
-                    }
-            })
-            
-        }
+
         
     }
 }
@@ -239,7 +216,7 @@ struct Recipe : Identifiable {
 
 struct FoodItemView: View {
     var foodItem : FoodItem
-    @EnvironmentObject var userInfo : userSettings
+    
     var body: some View {
         VStack{
             Group{
@@ -258,11 +235,8 @@ struct FoodItemView: View {
                 Text("Vitamin E: " +  foodItem.vitaminE.description)
                 Text("Vitamin K: " + foodItem.vitaminK.description)
                 Text("Zinc: " + foodItem.zinc.description)
-                Button(action: {
-                    self.userInfo.total_values.calcium += self.foodItem.calcium
-                    }){
-                    Text("aadd")
-                }
+                
+                addFoodButton(foodItem: foodItem)
             }
         }
         }
@@ -275,6 +249,29 @@ struct FoodItemRow: View {
     }
 }
 
+
+struct addFoodButton: View {
+    var foodItem : FoodItem
+    @EnvironmentObject var userInfo : userSettings
+    var body: some View {
+        Button(action: {
+            self.userInfo.total_values.calcium += self.foodItem.calcium
+            self.userInfo.total_values.fiber += self.foodItem.fiber
+            self.userInfo.total_values.iron += self.foodItem.iron
+            self.userInfo.total_values.potassium += self.foodItem.potassium
+            self.userInfo.total_values.protein += self.foodItem.protein
+            self.userInfo.total_values.vitaminA += self.foodItem.vitaminA
+            self.userInfo.total_values.vitaminB12 += self.foodItem.vitaminB12
+            self.userInfo.total_values.vitaminC += self.foodItem.vitaminC
+            self.userInfo.total_values.vitaminD += self.foodItem.vitaminD
+            self.userInfo.total_values.vitaminE += self.foodItem.vitaminE
+            self.userInfo.total_values.vitaminK += self.foodItem.vitaminK
+            self.userInfo.total_values.zinc += self.foodItem.zinc
+            }){
+            Text("add food")
+        }
+    }
+}
 
 
 struct FoodItem : Identifiable {
