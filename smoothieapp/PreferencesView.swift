@@ -21,15 +21,17 @@ struct PreferencesView: View {
                     Section (header: Text("Personal Info")) {
                         TextField("Your first name", text: $userInfo.user_profile.first_name)
                         TextField("Your last name", text: $userInfo.user_profile.last_name)
+                        
                         Picker("Gender", selection: $userInfo.user_profile.gender) {
-                            Text("Female").tag(0)
-                            Text("Male").tag(1)
+                            Text("Female").tag("Female")
+                            Text("Male").tag("Male")
                         }
+                        .pickerStyle(SegmentedPickerStyle())
                         
                         // convert age to string
                         Picker("Age", selection: $userInfo.user_profile.age) {
                             ForEach(9..<100) { i in
-                                Text(String(i))
+                                Text(String(i)).tag(String(i))
                             }
                         }
                     }
