@@ -123,10 +123,10 @@ class userSettings : ObservableObject {
     
     init(){
         // grab age, gender, first name, and last name
-        var age = 0 // push notification if still 0
-        var gender = 0 // push notification if still 0
-        var first_name = ""
-        var last_name = ""
+        var age = "9"
+        var str_gender = ""
+        let first_name = ""
+        let last_name = ""
         
         // HEALTH KIT
         if HKHealthStore.isHealthDataAvailable() {
@@ -148,23 +148,29 @@ class userSettings : ObservableObject {
             
             do {
                 let birthdayComponents =  try healthStore.dateOfBirthComponents()
-                gender = try healthStore.biologicalSex().biologicalSex.rawValue
+                let gender = try healthStore.biologicalSex().biologicalSex.rawValue
+                
+                if (gender == 1){
+                    str_gender = "Female"
+                } else {
+                    str_gender = "Male"
+                }
                 
                 //2. Use Calendar to calculate age.
                 let today = Date()
                 let calendar = Calendar.current
                 let todayDateComponents = calendar.dateComponents([.year], from: today)
                 let thisYear = todayDateComponents.year!
-                age = thisYear - birthdayComponents.year!
+                age = String(thisYear - birthdayComponents.year!)
             } catch {
                 print(error)
             }
         }
         
-        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: gender, allergies: [String](), health_options: [String](), recommendations: [Recipe]())
+        
+        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: [String](), recommendations: [Recipe]())
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
-        
         
         max_values = MaxValues(id: "id", calcium: 1000.0, fiber: 28.0, iron: 18.0, magnesium: 310.0, potassium: 4700.0, protein: 46.0, vitaminA: 700, vitaminB12: 2.4, vitaminC: 75.0, vitaminD: 600.0, vitaminE: 15.0, vitaminK: 90.0, zinc: 8.0)
         
@@ -181,8 +187,8 @@ struct UserProfile : Identifiable {
     var id : String
     var first_name : String
     var last_name : String
-    var age : Int
-    var gender : Int
+    var age : String
+    var gender : String
     var allergies : [String]
     var health_options : [String]
     var recommendations : [Recipe]
@@ -237,4 +243,46 @@ struct NutrientUnits : Identifiable {
     var vitaminE : String
     var vitaminK : String
     var zinc : String
+}
+
+func get_guidelines(gender: String, age: Int) -> String {
+    // female
+    var result = ""
+    if (gender == "Female"){
+        if (9...13).contains(age){
+            result = "f9-13"
+        }
+        else if (14...18).contains(age){
+            result = "f14-18"
+        }
+        else if (19...30).contains(age){
+            result = "f19-30"
+        }
+        else if (31...50).contains(age){
+            result = "f31-50"
+        }
+        else if (51...100).contains(age){
+            result = "f51+"
+        }
+    }
+    
+    // male
+    if (gender == "Male"){
+        if (9...13).contains(age){
+            result = "m9-13"
+        }
+        else if (14...18).contains(age){
+            result = "m14-18"
+        }
+        else if (19...30).contains(age){
+            result = "m19-30"
+        }
+        else if (31...50).contains(age){
+            result = "m31-50"
+        }
+        else if (51...100).contains(age){
+            result = "m51+"
+        }
+    }
+    return result
 }

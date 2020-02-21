@@ -28,7 +28,7 @@ struct PreferencesView: View {
                         
                         // convert age to string
                         Picker("Age", selection: $userInfo.user_profile.age) {
-                            ForEach(13..<100) { i in
+                            ForEach(9..<100) { i in
                                 Text(String(i))
                             }
                         }
