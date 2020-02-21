@@ -14,50 +14,40 @@ struct PreferencesView: View {
     @State var selections: [String] = []
     @State var allergies = ""
     @State var healthoptions = ""
-    @State var save = false
     
     var body: some View {
         NavigationView {
-            Form {
-                Section {
-                    TextField("Your first name", text: $userInfo.user_profile.first_name)
-                    TextField("Your last name", text: $userInfo.user_profile.last_name)
-                    Picker("Gender", selection: $userInfo.user_profile.gender) {
-                        Text("Female").tag(0)
-                        Text("Male").tag(1)
-                    }
-                    
-                    // convert age to string
-                    Picker("Age", selection: $userInfo.user_profile.age) {
-                        ForEach(13..<100) { i in
-                            Text(String(i))
+                Form {
+                    Section (header: Text("Personal Info")) {
+                        TextField("Your first name", text: $userInfo.user_profile.first_name)
+                        TextField("Your last name", text: $userInfo.user_profile.last_name)
+                        Picker("Gender", selection: $userInfo.user_profile.gender) {
+                            Text("Female").tag(0)
+                            Text("Male").tag(1)
+                        }
+                        
+                        // convert age to string
+                        Picker("Age", selection: $userInfo.user_profile.age) {
+                            ForEach(13..<100) { i in
+                                Text(String(i))
+                            }
                         }
                     }
-                }
-                List {
-                    Section(header: Text("Health Options")) {
-                        ForEach(self.options, id: \.self) { item in
-                            MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
-                                if self.selections.contains(item) {
-                                    self.selections.removeAll(where: { $0 == item })
-                                }
-                                else {
-                                    self.selections.append(item)
+                    
+                    List {
+                        Section(header: Text("Health Options")) {
+                            ForEach(self.options, id: \.self) { item in
+                                MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
+                                    if self.selections.contains(item) {
+                                        self.selections.removeAll(where: { $0 == item })
+                                    }
+                                    else {
+                                        self.selections.append(item)
+                                    }
                                 }
                             }
                         }
                     }
-                }
-
-//                Section {
-//                    Button(action: {self.save.toggle()}) {
-//                        Text("Save")
-//                        self.userInfo.user_profile.first_name = firstName
-//                        self.userInfo.user_profile.last_name = lastName
-//                        self.userInfo.user_profile.age = age
-//                        self.userInfo.user_profile.health_options = selections
-//                }
-//                }
             }.navigationBarTitle("Preferences")
         }
     }
@@ -80,6 +70,7 @@ struct MultipleSelectionRow: View {
         }
     }
 }
+
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
         PreferencesView().environmentObject(userSettings())
