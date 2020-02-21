@@ -213,10 +213,10 @@ struct Recipe : Identifiable {
     var vitaminK : String
     var zinc : String
 }
-
+	
 struct FoodItemView: View {
     var foodItem : FoodItem
-    
+    @State private var ounces = 0
     var body: some View {
         VStack{
             Group{
@@ -236,7 +236,16 @@ struct FoodItemView: View {
                 Text("Vitamin K: " + foodItem.vitaminK.description)
                 Text("Zinc: " + foodItem.zinc.description)
                 
-                addFoodButton(foodItem: foodItem)
+                
+                Picker(selection: $ounces, label: Text("Ounces")){
+                    Text("0").tag(0)
+                    Text("1").tag(1)
+                    Text("2").tag(2)
+                    Text("3").tag(3)
+                    Text("4").tag(4)
+                    Text("5").tag(5)
+                }
+                addFoodButton(foodItem: foodItem, ounces: ounces)
             }
         }
         }
@@ -252,23 +261,39 @@ struct FoodItemRow: View {
 
 struct addFoodButton: View {
     var foodItem : FoodItem
+    var ounces : Int
+    @State private var alertSaved = false
     @EnvironmentObject var userInfo : userSettings
     var body: some View {
         Button(action: {
-            self.userInfo.total_values.calcium += self.foodItem.calcium
-            self.userInfo.total_values.fiber += self.foodItem.fiber
-            self.userInfo.total_values.iron += self.foodItem.iron
-            self.userInfo.total_values.potassium += self.foodItem.potassium
-            self.userInfo.total_values.protein += self.foodItem.protein
-            self.userInfo.total_values.vitaminA += self.foodItem.vitaminA
-            self.userInfo.total_values.vitaminB12 += self.foodItem.vitaminB12
-            self.userInfo.total_values.vitaminC += self.foodItem.vitaminC
-            self.userInfo.total_values.vitaminD += self.foodItem.vitaminD
-            self.userInfo.total_values.vitaminE += self.foodItem.vitaminE
-            self.userInfo.total_values.vitaminK += self.foodItem.vitaminK
-            self.userInfo.total_values.zinc += self.foodItem.zinc
+            self.userInfo.total_values.calcium += self.foodItem.calcium * CGFloat(self.ounces)
+            self.userInfo.total_values.fiber += self.foodItem.fiber * CGFloat(self.ounces)
+            self.userInfo.total_values.iron += self.foodItem.iron * CGFloat(self.ounces)
+            self.userInfo.total_values.potassium += self.foodItem.potassium * CGFloat(self.ounces)
+            self.userInfo.total_values.protein += self.foodItem.protein * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminA += self.foodItem.vitaminA * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminB12 += self.foodItem.vitaminB12 * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminC += self.foodItem.vitaminC * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminD += self.foodItem.vitaminD * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminE += self.foodItem.vitaminE * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminK += self.foodItem.vitaminK * CGFloat(self.ounces)
+            self.userInfo.total_values.zinc += self.foodItem.zinc * CGFloat(self.ounces)
+            if (self.ounces > 0){
+                self.alertSaved = true
+            }
             }){
-            Text("add food")
+                Text("add food")
+                .padding()
+                .background(Color.pink)
+                
+                .alert(isPresented: $alertSaved){() -> Alert in
+                    Alert (title: Text("Saved food item!"), message:	 Text("go back to items to add other foods"))
+                        
+                  
+                }
+                
+                
+            
         }
     }
 }
