@@ -38,15 +38,8 @@ struct PreferencesView: View {
                     
                     List {
                         Section(header: Text("Health Options")) {
-                            ForEach(self.options, id: \.self) { item in
-                                MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
-                                    if self.selections.contains(item) {
-                                        self.selections.removeAll(where: { $0 == item })
-                                    }
-                                    else {
-                                        self.selections.append(item)
-                                    }
-                                }
+                            ForEach(userInfo.user_profile.health_options, id: \.id){ item in
+                                MultipleToggle(title: item.id, toggle: item.toggle)
                             }
                         }
                     }
@@ -54,20 +47,15 @@ struct PreferencesView: View {
         }
     }
 }
-    
-struct MultipleSelectionRow: View {
-    var title: String
-    var isSelected: Bool
-    var action: () -> Void
+
+struct MultipleToggle : View {
+    @State var title: String
+    @State var toggle : Bool
     
     var body: some View {
-        Button(action: self.action) {
-            HStack {
+       List {
+        Toggle(isOn: $toggle){
                 Text(self.title)
-                if self.isSelected {
-                    Spacer()
-                    Image(systemName: "checkmark")
-                }
             }
         }
     }
