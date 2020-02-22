@@ -165,8 +165,14 @@ class userSettings : ObservableObject {
             }
         }
         
+        let hlist = ["Vegan", "Balanced", "Vegetarian", "Tree-Nut-Free", "Low-Carb", "Peanut-Free", "Low-Fat"]
+        var health_options = [HealthOptions]()
+        for i in hlist {
+            health_options.append(HealthOptions(id: i, toggle: false))
+        }
         
-        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: [String](), recommendations: [Recipe]())
+        
+        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, recommendations: [Recipe]())
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
@@ -188,7 +194,7 @@ struct UserProfile : Identifiable {
     var age : String
     var gender : String
     var allergies : [String]
-    var health_options : [String]
+    var health_options : [HealthOptions]
     var recommendations : [Recipe]
 }
 
@@ -242,6 +248,12 @@ struct NutrientUnits : Identifiable {
     var vitaminK : String
     var zinc : String
 }
+
+struct HealthOptions : Identifiable {
+    var id: String
+    var toggle: Bool
+}
+
 
 func get_guidelines(gender: String, age: Int) -> String {
     // female
