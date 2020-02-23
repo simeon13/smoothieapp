@@ -18,7 +18,6 @@ struct MapView : View {
 
 struct LocationView: UIViewRepresentable {
     
-    
     var locationManager = CLLocationManager()
 
     func setupManager() {
@@ -34,7 +33,7 @@ struct LocationView: UIViewRepresentable {
         mapView.userTrackingMode = .follow
 
         let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = "Market"
+        searchRequest.naturalLanguageQuery = "Groceries"
         searchRequest.region = mapView.region
         let search = MKLocalSearch(request: searchRequest)
         search.start { response, error in
@@ -64,10 +63,4 @@ struct MapView_Previews: PreviewProvider {
     static var previews: some View {
         MapView()
     }
-}
-
-struct Market {
-    let id : String
-    let name : String
-    let location: CLLocationCoordinate2D
 }
