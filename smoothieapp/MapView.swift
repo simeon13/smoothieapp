@@ -33,7 +33,7 @@ struct LocationView: UIViewRepresentable {
         mapView.userTrackingMode = .follow
 
         let searchRequest = MKLocalSearch.Request()
-        searchRequest.naturalLanguageQuery = "Groceries"
+        searchRequest.naturalLanguageQuery = "Grocery"
         searchRequest.region = mapView.region
         let search = MKLocalSearch(request: searchRequest)
         search.start { response, error in
