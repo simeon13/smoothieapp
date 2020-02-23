@@ -168,7 +168,7 @@ class userSettings : ObservableObject {
         let hlist = ["Vegan", "Balanced", "Vegetarian", "Tree-Nut-Free", "Low-Carb", "Peanut-Free", "Low-Fat"]
         var health_options = [HealthOptions]()
         for i in hlist {
-            health_options.append(HealthOptions(id: i, toggle: false))
+            health_options.append(HealthOptions(id: "id", name: i, toggle: false))
         }
         
         
@@ -251,6 +251,7 @@ struct NutrientUnits : Identifiable {
 
 struct HealthOptions : Identifiable {
     var id: String
+    var name: String
     var toggle: Bool
 }
 
