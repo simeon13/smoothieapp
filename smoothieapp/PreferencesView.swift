@@ -10,8 +10,6 @@ import SwiftUI
 
 struct PreferencesView: View {
     @EnvironmentObject var userInfo: userSettings
-    @State var options: [String] = ["Vegan", "Balanced", "Vegetarian", "Tree-Nut-Free", "Low-Carb", "Peanut-Free", "Low-Fat"]
-    @State var selections: [String] = []
     @State var allergies = ""
     @State var healthoptions = ""
     
@@ -36,30 +34,21 @@ struct PreferencesView: View {
                         }
                     }
                     
-                    List {
-                        Section(header: Text("Health Options")) {
-                            ForEach(userInfo.user_profile.health_options, id: \.id){ item in
-                                MultipleToggle(title: item.id, toggle: item.toggle)
+                    Section(header: Text("Health Options")) {
+                        List {
+                            ForEach (0..<6){ i in
+                                Toggle(isOn: self.$userInfo.user_profile.health_options[i].toggle){
+                                    Text(self.userInfo.user_profile.health_options[i].name)
+                                }
                             }
+                            
                         }
-                    }
+                }
             }.navigationBarTitle("Preferences")
         }
     }
 }
 
-struct MultipleToggle : View {
-    @State var title: String
-    @State var toggle : Bool
-    
-    var body: some View {
-       List {
-        Toggle(isOn: $toggle){
-                Text(self.title)
-            }
-        }
-    }
-}
 
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
