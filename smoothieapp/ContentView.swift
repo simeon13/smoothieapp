@@ -24,11 +24,8 @@ struct ContentView: View {
                         .fontWeight(.bold)
                         .foregroundColor(Color.blue)
                         .padding([.leading, .bottom, .trailing], 10.0)
-                        .padding(.top, 50.0)
+                        .padding(.top, 80.0)
                         .frame(maxWidth: .infinity, alignment: .center)
-                    Divider()
-                    .frame(height: 5.0)
-                    
                     
                     Text("Hello \(userInfo.user_profile.first_name)!")
                         .font(.headline)
@@ -37,7 +34,7 @@ struct ContentView: View {
                         .padding()
                         .frame(maxWidth: .infinity, alignment: .center)
                     Spacer()
-                    .frame(height: 25.0)
+                    .frame(height: 10.0)
                     
                     NavigationLink(destination: FoodView()){
                             Text("Food Information")
@@ -49,7 +46,7 @@ struct ContentView: View {
                                 .background(Color.blue)
                                 .cornerRadius(10)
                                 .frame(maxWidth: .infinity, alignment: .center)
-                    }.padding(.all, 10)
+                    }.padding(.all, 8)
                     
                     NavigationLink(destination: NutrientView()){
                             Text("Nutrient Levels")
@@ -61,7 +58,7 @@ struct ContentView: View {
                                 .background(Color.blue)
                                 .cornerRadius(10)
                                 .frame(maxWidth: .infinity, alignment: .center)
-                    }.padding(.all, 10)
+                    }.padding(.all, 8)
                     
                     NavigationLink(destination: WeeklyView()){
                             Text("Weekly Nutrients")
@@ -73,7 +70,7 @@ struct ContentView: View {
                                 .background(Color.blue)
                                 .cornerRadius(10)
                                 .frame(maxWidth: .infinity, alignment: .center)
-                    }.padding(.all, 10)
+                    }.padding(.all, 8)
                     
                     
                     NavigationLink(destination: RecommendationView()){
@@ -86,7 +83,19 @@ struct ContentView: View {
                                 .background(Color.blue)
                                 .cornerRadius(10)
                                 .frame(maxWidth: .infinity, alignment: .center)
-                    }.padding(.all, 10)
+                    }.padding(.all, 8)
+                    
+                    NavigationLink(destination: MapView()){
+                            Text("Nearby Locations")
+                                .font(.subheadline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(Color.white)
+                                .padding(.all)
+                                .frame(width: 250.0)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .frame(maxWidth: .infinity, alignment: .center)
+                    }.padding(.all, 8)
                     
                     NavigationLink(destination: PreferencesView()){
                             Text("Preferences")
@@ -98,7 +107,7 @@ struct ContentView: View {
                                 .background(Color.blue)
                                 .cornerRadius(10)
                                 .frame(maxWidth: .infinity, alignment: .center)
-                    }.padding(.all, 10)
+                    }.padding(.all, 8)
                 }
             }
             .edgesIgnoringSafeArea(.all)
