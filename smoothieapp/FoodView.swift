@@ -109,19 +109,19 @@ class observer : ObservableObject {
                 let name = value?["name"] as? String ?? ""
                 let url = value?["url"] as? String ?? ""
                 let image = value?["image"] as? String ?? ""
-                let calcium = value?["calcium"] as? String ?? ""
-                let fiber = value?["fiber"] as? String ?? ""
-                let iron = value?["iron"] as? String ?? ""
-                let magnesium = value?["magnesium"] as? String ?? ""
-                let potassium = value?["potassium"] as? String ?? ""
-                let protein = value?["protein"] as? String ?? ""
-                let vitaminA = value?["vitaminA"] as? String ?? ""
-                let vitaminB12 = value?["vitaminB12"] as? String ?? ""
-                let vitaminC = value?["vitaminC"] as? String ?? ""
-                let vitaminD = value?["vitaminD"] as? String ?? ""
-                let vitaminE = value?["vitaminE"] as? String ?? ""
-                let vitaminK = value?["vitaminK"] as? String ?? ""
-                let zinc = value?["zinc"] as? String ?? ""
+                let calcium = value?["calcium"] as? CGFloat ?? 0.0
+                let fiber = value?["fiber"] as? CGFloat ?? 0.0
+                let iron = value?["iron"] as? CGFloat ?? 0.0
+                let magnesium = value?["magnesium"] as? CGFloat ?? 0.0
+                let potassium = value?["potassium"] as? CGFloat ?? 0.0
+                let protein = value?["protein"] as? CGFloat ?? 0.0
+                let vitaminA = value?["vitaminA"] as? CGFloat ?? 0.0
+                let vitaminB12 = value?["vitaminB12"] as? CGFloat ?? 0.0
+                let vitaminC = value?["vitaminC"] as? CGFloat ?? 0.0
+                let vitaminD = value?["vitaminD"] as? CGFloat ?? 0.0
+                let vitaminE = value?["vitaminE"] as? CGFloat ?? 0.0
+                let vitaminK = value?["vitaminK"] as? CGFloat ?? 0.0
+                let zinc = value?["zinc"] as? CGFloat ?? 0.0
                 // create new recipe object
                 let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
                 self.recipe_data.append(info)
@@ -183,8 +183,29 @@ class observer : ObservableObject {
 struct RecipeView: View {
     var recipe: Recipe
     var body: some View {
-        Text("Recipe Working")
-    }
+        VStack{
+            Group{
+                Text("Calcium: " + recipe.calcium.description)
+                Text("Fiber: " + recipe.fiber.description)
+                Text("Iron: " + recipe.iron.description)
+                Text("Potassium: " +  recipe.potassium.description)
+                Text("Protein: " +  recipe.protein.description)
+                Text("Vitamin A: " +  recipe.vitaminA.description)
+                Text("Vitamin B12: " +  recipe.vitaminB12.description)
+                Text("Vitamin C: " +  recipe.vitaminC.description)
+                Text("Vitamin D: " +  recipe.vitaminD.description)
+                }
+            
+            Group{
+                Text("Vitamin E: " +  recipe.vitaminE.description)
+                Text("Vitamin K: " + recipe.vitaminK.description)
+                Text("Zinc: " + recipe.zinc.description)
+                
+                
+ 
+            }
+        }
+        }
 }
 
 struct RecipeRow: View {
@@ -199,19 +220,20 @@ struct Recipe : Identifiable {
     var name : String
     var url : String
     var image : String
-    var calcium : String
-    var fiber : String
-    var iron : String
-    var magnesium : String
-    var potassium : String
-    var protein : String
-    var vitaminA : String
-    var vitaminB12 : String
-    var vitaminC : String
-    var vitaminD : String
-    var vitaminE : String
-    var vitaminK : String
-    var zinc : String
+    var calcium : CGFloat
+    var fiber : CGFloat
+    var iron : CGFloat
+    var magnesium : CGFloat
+    var potassium : CGFloat
+    var protein : CGFloat
+    var vitaminA : CGFloat
+    var vitaminB12 : CGFloat
+    var vitaminC : CGFloat
+    var vitaminD : CGFloat
+    var vitaminE : CGFloat
+    var vitaminK : CGFloat
+    var zinc : CGFloat
+
 }
 	
 struct FoodItemView: View {
