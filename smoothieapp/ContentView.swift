@@ -9,6 +9,7 @@
 import SwiftUI
 import HealthKit
 import CloudKit
+import FirebaseDatabase
 
 struct ContentView: View {
     @EnvironmentObject var userInfo : userSettings
@@ -185,9 +186,42 @@ class userSettings : ObservableObject {
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
-        max_values = MaxValues(id: "id", calcium: 1000.0, fiber: 28.0, iron: 18.0, magnesium: 310.0, potassium: 4700.0, protein: 46.0, vitaminA: 700, vitaminB12: 2.4, vitaminC: 75.0, vitaminD: 600.0, vitaminE: 15.0, vitaminK: 90.0, zinc: 8.0)
-        
+        max_values = MaxValues(id: "id", calcium: 1.0, fiber: 1.0, iron: 1.0, magnesium: 1.0, potassium: 1.0, protein: 1.0, vitaminA: 1.0, vitaminB12: 1.0, vitaminC: 1.0, vitaminD: 1.0, vitaminE: 1.0, vitaminK: 1.0, zinc: 1.0)
+                
         nutrient_units =  NutrientUnits(id: "id", calcium: "mg", fiber: "g", iron: "mg", magnesium: "mg", potassium: "mg", protein: "g", vitaminA: "µg", vitaminB12: "µg", vitaminC: "mg", vitaminD: "IU", vitaminE: "mg", vitaminK: "µg", zinc: "mg")
+        
+        let gstring = get_guidelines(gender: str_gender, str_age: age)
+        let ref = Database.database().reference(withPath: "guidelines/\(gstring)")
+        ref.observeSingleEvent(of: .value, with: { (snapshot) in
+            let value = snapshot.value as? NSDictionary
+            let calcium = value?["calcium"] as? CGFloat ?? 1.0
+            let fiber = value?["fiber"] as? CGFloat ?? 1.0
+            let iron = value?["iron"] as? CGFloat ?? 1.0
+            let magnesium = value?["magnesium"] as? CGFloat ?? 1.0
+            let potassium = value?["potassium"] as? CGFloat ?? 1.0
+            let protein = value?["protein"] as? CGFloat ?? 1.0
+            let vitaminA = value?["vitamin-A"] as? CGFloat ?? 1.0
+            let vitaminB12 = value?["vitamin-B12"] as? CGFloat ?? 1.0
+            let vitaminC = value?["vitamin-C"] as? CGFloat ?? 1.0
+            let vitaminD = value?["vitamin-D"] as? CGFloat ?? 1.0
+            let vitaminE = value?["vitamin-E"] as? CGFloat ?? 1.0
+            let vitaminK = value?["vitamin-K"] as? CGFloat ?? 1.0
+            let zinc = value?["zinc"] as? CGFloat ?? 1.0
+            
+            self.max_values.calcium = calcium
+            self.max_values.fiber = fiber
+            self.max_values.iron = iron
+            self.max_values.magnesium = magnesium
+            self.max_values.potassium = potassium
+            self.max_values.protein = protein
+            self.max_values.vitaminA = vitaminA
+            self.max_values.vitaminB12 = vitaminB12
+            self.max_values.vitaminC = vitaminC
+            self.max_values.vitaminD = vitaminD
+            self.max_values.vitaminE = vitaminE
+            self.max_values.vitaminK = vitaminK
+            self.max_values.zinc = zinc
+        })
     }
 }
 
@@ -264,8 +298,9 @@ struct HealthOptions : Identifiable {
 }
 
 
-func get_guidelines(gender: String, age: Int) -> String {
+func get_guidelines(gender: String, str_age: String) -> String {
     // female
+    let age = Int(str_age) ?? 18
     var result = ""
     if (gender == "Female"){
         if (9...13).contains(age){
