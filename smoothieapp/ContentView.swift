@@ -181,7 +181,7 @@ class userSettings : ObservableObject {
         }
         
         
-        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, recommendations: [Recipe]())
+        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options)
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
@@ -204,7 +204,6 @@ struct UserProfile : Identifiable {
     var gender : String
     var allergies : [String]
     var health_options : [HealthOptions]
-    var recommendations : [Recipe]
 }
 
 struct TotalValues : Identifiable {
