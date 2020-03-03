@@ -14,8 +14,7 @@ struct PreferencesView: View {
     @State var healthoptions = ""
     
     var body: some View {
-        NavigationView {
-                Form {
+            Form {
                     Section (header: Text("Personal Info")) {
                         TextField("Your first name", text: $userInfo.user_profile.first_name)
                         TextField("Your last name", text: $userInfo.user_profile.last_name)
@@ -26,7 +25,6 @@ struct PreferencesView: View {
                         }
                         .pickerStyle(SegmentedPickerStyle())
                         
-                        // convert age to string
                         Picker("Age", selection: $userInfo.user_profile.age) {
                             ForEach(9..<100) { i in
                                 Text(String(i)).tag(String(i))
@@ -42,9 +40,9 @@ struct PreferencesView: View {
                                 }
                             } 
                         }
-                }
-            }.navigationBarTitle("Preferences")
-        }
+                    }
+            }
+            .navigationBarTitle("Preferences")
     }
 }
 
