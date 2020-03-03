@@ -12,9 +12,19 @@ import FirebaseDatabase
 struct FoodView: View {
     @ObservedObject var data = observer()
     
+    @State private var searchTerm : String = ""
+    
     var body: some View {
         NavigationView {
             List {
+                //search bar
+                SearchBar(text: $searchTerm)
+                ForEach(self.data.food_data.filter{
+                    self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
+                }, id: \.self){
+                    name in
+                    Text(name)
+                }
                 // Recipes
                 Section(header: Text("Recipes")) {
                     ForEach(data.recipe_data){i in
@@ -94,6 +104,7 @@ class observer : ObservableObject {
     @Published var fruit_data = [FoodItem]()
     @Published var grain_data = [FoodItem]()
     @Published var poultry_data = [FoodItem]()
+    @Published var food_data = [String]()
     
     
     init(){
@@ -149,21 +160,27 @@ class observer : ObservableObject {
                     let food_item = FoodItem(id: name, name: name, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
                     if (entry == "Vegetables"){
                         self.vegetable_data.append(food_item)
+                        self.food_data.append(food_item.name)
                     }
                     if (entry == "dairy"){
                         self.dairy_data.append(food_item)
+                        self.food_data.append(food_item.name)
                     }
                     if (entry == "fish"){
                         self.fish_data.append(food_item)
+                        self.food_data.append(food_item.name)
                     }
                     if (entry == "fruit"){
                         self.fruit_data.append(food_item)
+                        self.food_data.append(food_item.name)
                     }
                     if (entry == "grains"){
                         self.grain_data.append(food_item)
+                        self.food_data.append(food_item.name)
                     }
                     if (entry == "poultry"){
                         self.poultry_data.append(food_item)
+                        self.food_data.append(food_item.name)
                     }
                 }
             })
@@ -280,3 +297,28 @@ struct FoodItem : Identifiable {
     var vitaminK : CGFloat
     var zinc : CGFloat
 }
+
+struct SearchBar : UIViewRepresentable{
+    @Binding var text : String
+    class Coordinator : NSObject, UISearchBarDelegate{
+        @Binding var text : String
+        init(text : Binding<String>){
+            _text = text
+        }
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+            text = searchText
+        }
+    }
+    func makeCoordinator() -> SearchBar.Coordinator{
+        return Coordinator(text: $text)
+    }
+    func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
+        let searchBar = UISearchBar(frame: .zero)
+        searchBar.delegate = context.coordinator
+        return searchBar
+    }
+    func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
+        uiView.text = text
+    }
+}
+
