@@ -24,7 +24,13 @@ struct FoodView: View {
                     self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
                 }, id: \.self){
                     name in
-                    Text(name)
+                    ForEach(self.data.items){i in
+                        if name == i.name{
+                            NavigationLink(destination: FoodItemView(foodItem: i)){
+                                FoodItemRow(foodItem: i)
+                            }
+                        }
+                    }
                 }
                 // Recipes
                 Section(header: Text("Recipes")) {
@@ -109,6 +115,7 @@ class observer : ObservableObject {
     @Published var grain_data = [FoodItem]()
     @Published var poultry_data = [FoodItem]()
     @Published var food_data = [String]()
+    @Published var items = [FoodItem]()
     
     
     init(){
@@ -165,26 +172,32 @@ class observer : ObservableObject {
                     if (entry == "Vegetables"){
                         self.vegetable_data.append(food_item)
                         self.food_data.append(food_item.name)
+                        self.items.append(food_item)
                     }
                     if (entry == "dairy"){
                         self.dairy_data.append(food_item)
                         self.food_data.append(food_item.name)
+                        self.items.append(food_item)
                     }
                     if (entry == "fish"){
                         self.fish_data.append(food_item)
                         self.food_data.append(food_item.name)
+                        self.items.append(food_item)
                     }
                     if (entry == "fruit"){
                         self.fruit_data.append(food_item)
                         self.food_data.append(food_item.name)
+                        self.items.append(food_item)
                     }
                     if (entry == "grains"){
                         self.grain_data.append(food_item)
                         self.food_data.append(food_item.name)
+                        self.items.append(food_item)
                     }
                     if (entry == "poultry"){
                         self.poultry_data.append(food_item)
                         self.food_data.append(food_item.name)
+                        self.items.append(food_item)
                     }
                 }
             })
