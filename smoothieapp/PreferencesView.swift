@@ -14,6 +14,9 @@ struct PreferencesView: View {
     @State var healthoptions = ""
     
     var body: some View {
+        VStack() {
+            Divider()
+            UpdateButton()
             Form {
                     Section (header: Text("Personal Info")) {
                         TextField("Your first name", text: $userInfo.user_profile.first_name)
@@ -31,6 +34,7 @@ struct PreferencesView: View {
                             }
                         }
                     }
+
                     
                     Section(header: Text("Health Options")) {
                         List {
@@ -43,6 +47,7 @@ struct PreferencesView: View {
                     }
             }
             .navigationBarTitle("Preferences")
+        }
     }
 }
 
@@ -50,4 +55,28 @@ struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
         PreferencesView().environmentObject(userSettings())
     }
+}
+
+struct UpdateButton : View {
+    @EnvironmentObject var userInfo: userSettings
+    @State private var alertSaved = false
+
+    var body: some View {
+        Button(action: {
+            // UPDATE ALL VALUES
+            self.alertSaved = true
+        }) {
+            Text("Update Health Values")
+        }
+        .padding(10)
+        .font(.callout)
+        .foregroundColor(.white)
+        .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.blue]), startPoint: .leading, endPoint: .trailing))
+        .cornerRadius(30)
+        
+        .alert(isPresented: $alertSaved){() -> Alert in
+            Alert (title: Text("Saved!"), message: Text("Health Values Updated Based on Gender and Age."))
+        }
+    }
+    
 }
