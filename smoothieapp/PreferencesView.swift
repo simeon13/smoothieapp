@@ -10,8 +10,6 @@ import SwiftUI
 
 struct PreferencesView: View {
     @EnvironmentObject var userInfo: userSettings
-    @State var options: [String] = ["Vegan", "Balanced", "Vegetarian", "Tree-Nut-Free", "Low-Carb", "Peanut-Free", "Low-Fat"]
-    @State var selections: [String] = []
     @State var allergies = ""
     @State var healthoptions = ""
     
@@ -21,52 +19,31 @@ struct PreferencesView: View {
                     Section (header: Text("Personal Info")) {
                         TextField("Your first name", text: $userInfo.user_profile.first_name)
                         TextField("Your last name", text: $userInfo.user_profile.last_name)
+                        
                         Picker("Gender", selection: $userInfo.user_profile.gender) {
-                            Text("Female").tag(0)
-                            Text("Male").tag(1)
+                            Text("Female").tag("Female")
+                            Text("Male").tag("Male")
                         }
+                        .pickerStyle(SegmentedPickerStyle())
                         
                         // convert age to string
                         Picker("Age", selection: $userInfo.user_profile.age) {
-                            ForEach(13..<100) { i in
-                                Text(String(i))
+                            ForEach(9..<100) { i in
+                                Text(String(i)).tag(String(i))
                             }
                         }
                     }
                     
-                    List {
-                        Section(header: Text("Health Options")) {
-                            ForEach(self.options, id: \.self) { item in
-                                MultipleSelectionRow(title: item, isSelected: self.selections.contains(item)) {
-                                    if self.selections.contains(item) {
-                                        self.selections.removeAll(where: { $0 == item })
-                                    }
-                                    else {
-                                        self.selections.append(item)
-                                    }
+                    Section(header: Text("Health Options")) {
+                        List {
+                            ForEach (0..<6){ i in
+                                Toggle(isOn: self.$userInfo.user_profile.health_options[i].toggle){
+                                    Text(self.userInfo.user_profile.health_options[i].name)
                                 }
-                            }
+                            } 
                         }
-                    }
-            }.navigationBarTitle("Preferences")
-        }
-    }
-}
-    
-struct MultipleSelectionRow: View {
-    var title: String
-    var isSelected: Bool
-    var action: () -> Void
-    
-    var body: some View {
-        Button(action: self.action) {
-            HStack {
-                Text(self.title)
-                if self.isSelected {
-                    Spacer()
-                    Image(systemName: "checkmark")
                 }
-            }
+            }.navigationBarTitle("Preferences")
         }
     }
 }
