@@ -40,15 +40,13 @@ struct PreferencesView: View {
                                 Toggle(isOn: self.$userInfo.user_profile.health_options[i].toggle){
                                     Text(self.userInfo.user_profile.health_options[i].name)
                                 }
-                            }
-                            
+                            } 
                         }
                 }
             }.navigationBarTitle("Preferences")
         }
     }
 }
-
 
 struct PreferencesView_Previews: PreviewProvider {
     static var previews: some View {
