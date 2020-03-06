@@ -75,6 +75,7 @@
 		15D5973323FD1805009F0C20 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		15FF959B24023D2F00BBAB36 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		15FF959D24023EEA00BBAB36 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+
 		17D5A190B24D5C74FCAF4D21 /* Pods_smoothieapp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_smoothieapp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		506F86D3B42FE32871EF52D1 /* Pods-smoothieapp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smoothieapp.debug.xcconfig"; path = "Target Support Files/Pods-smoothieapp/Pods-smoothieapp.debug.xcconfig"; sourceTree = "<group>"; };
 		5279C669EF186AA63FFF4EF9 /* Pods-smoothieapp-smoothieappUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-smoothieapp-smoothieappUITests.release.xcconfig"; path = "Target Support Files/Pods-smoothieapp-smoothieappUITests/Pods-smoothieapp-smoothieappUITests.release.xcconfig"; sourceTree = "<group>"; };
