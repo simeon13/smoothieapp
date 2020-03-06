@@ -17,7 +17,7 @@ struct PreferencesView: View {
     var body: some View {
         VStack() {
             Divider()
-            UpdateButton()
+            //UpdateButton()
             Form {
                     Section (header: Text("Personal Info")) {
                         TextField("Your first name", text: $userInfo.user_profile.first_name)
@@ -34,7 +34,7 @@ struct PreferencesView: View {
                                 Text(String(i)).tag(String(i))
                             }
                         }
-                    }
+                        DatePicker("Notification Time", selection: $userInfo.user_profile.time, displayedComponents: .hourAndMinute)
 
                     
                     Section(header: Text("Health Options")) {
@@ -58,7 +58,7 @@ struct PreferencesView_Previews: PreviewProvider {
     }
 }
 
-struct UpdateButton : View {
+/*struct UpdateButton : View {
     @EnvironmentObject var userInfo: userSettings
     @State private var alertSaved = false
 
@@ -113,4 +113,5 @@ struct UpdateButton : View {
         }
     }
     
+}*/
 }
