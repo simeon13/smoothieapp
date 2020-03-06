@@ -4,7 +4,7 @@
 //
 //  Created by Simeon Lam on 2/3/20.
 //  Copyright © 2020 cs125. All rights reserved.
-//
+//.
 
 import SwiftUI
 import FirebaseDatabase
@@ -122,8 +122,10 @@ class observer : ObservableObject {
                 let vitaminE = value?["vitaminE"] as? CGFloat ?? 0.0
                 let vitaminK = value?["vitaminK"] as? CGFloat ?? 0.0
                 let zinc = value?["zinc"] as? CGFloat ?? 0.0
+                let healthLabels = value?["health-labels"] as? [String] ?? [""]
+                let ingredientLines = value?["ingredient-lines"] as? [String] ?? [""]
                 // create new recipe object
-                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
+                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines)
                 self.recipe_data.append(info)
             }
         })
@@ -233,6 +235,9 @@ struct Recipe : Identifiable {
     var vitaminE : CGFloat
     var vitaminK : CGFloat
     var zinc : CGFloat
+    var healthLabels: [String]
+    var ingredientLines: [String]
+    
 
 }
 	
