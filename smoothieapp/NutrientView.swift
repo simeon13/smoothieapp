@@ -107,6 +107,6 @@ struct progressBar : View {
 }
 
 func format(total: CGFloat, max: CGFloat, unit: String) -> String{
-    let formatted = String(format: "%.2f / %.f \(unit)", total, max)
+    let formatted = String(format: "%.2f / %.2f \(unit)", total, max)
     return formatted
 }
