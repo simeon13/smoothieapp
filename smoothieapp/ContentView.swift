@@ -20,6 +20,7 @@ struct ContentView: View {
                 Color.pink.opacity(0.15)
             
                 VStack(alignment: .leading) {
+                    
                     Text("Smoothie Genie")
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -181,7 +182,7 @@ class userSettings : ObservableObject {
             health_options.append(HealthOptions(id: "id", name: i, toggle: false))
         }
                 
-        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date())
+        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date(), weekly: [TotalValues]())
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
@@ -238,6 +239,8 @@ struct UserProfile : Identifiable {
     var allergies : [String]
     var health_options : [HealthOptions]
     var time: Date
+    var weekly: [TotalValues]
+    
 }
 
 struct TotalValues : Identifiable {
@@ -339,4 +342,20 @@ func get_guidelines(gender: String, str_age: String) -> String {
         }
     }
     return result
+}
+
+extension Date {
+    var startOfDay : Date {
+        let calendar = Calendar.current
+        let unitFlags = Set<Calendar.Component>([.year, .month, .day])
+        let components = calendar.dateComponents(unitFlags, from: self)
+        return calendar.date(from: components)!
+   }
+
+    var endOfDay : Date {
+        var components = DateComponents()
+        components.day = 1
+        let date = Calendar.current.date(byAdding: components, to: self.startOfDay)
+        return (date?.addingTimeInterval(-1))!
+    }
 }
