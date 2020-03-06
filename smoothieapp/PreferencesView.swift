@@ -8,6 +8,7 @@
 
 import SwiftUI
 import FirebaseDatabase
+import Firebase
 
 struct PreferencesView: View {
     @EnvironmentObject var userInfo: userSettings
@@ -17,7 +18,7 @@ struct PreferencesView: View {
     var body: some View {
         VStack() {
             Divider()
-            //UpdateButton()
+            UpdateButton()
             Form {
                     Section (header: Text("Personal Info")) {
                         TextField("Your first name", text: $userInfo.user_profile.first_name)
@@ -35,6 +36,7 @@ struct PreferencesView: View {
                             }
                         }
                         DatePicker("Notification Time", selection: $userInfo.user_profile.time, displayedComponents: .hourAndMinute)
+                    }
 
                     
                     Section(header: Text("Health Options")) {
@@ -58,13 +60,13 @@ struct PreferencesView_Previews: PreviewProvider {
     }
 }
 
-/*struct UpdateButton : View {
+struct UpdateButton : View {
     @EnvironmentObject var userInfo: userSettings
     @State private var alertSaved = false
 
     var body: some View {
         Button(action: {
-            // UPDATE ALL VALUES
+            //   UPDATE ALL VALUES
             let gstring = get_guidelines(gender: self.userInfo.user_profile.gender, str_age: self.userInfo.user_profile.age)
             let ref = Database.database().reference(withPath: "guidelines/\(gstring)")
             ref.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -97,7 +99,7 @@ struct PreferencesView_Previews: PreviewProvider {
                 self.userInfo.max_values.vitaminK = vitaminK
                 self.userInfo.max_values.zinc = zinc
             })
-            //
+            
             self.alertSaved = true
         }) {
             Text("Update Health Values")
@@ -112,6 +114,4 @@ struct PreferencesView_Previews: PreviewProvider {
             Alert (title: Text("Saved!"), message: Text("Health Values Updated Based on Gender and Age."))
         }
     }
-    
-}*/
 }
