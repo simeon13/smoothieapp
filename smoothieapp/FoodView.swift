@@ -4,7 +4,7 @@
 //
 //  Created by Simeon Lam on 2/3/20.
 //  Copyright © 2020 cs125. All rights reserved.
-//
+//.
 
 import SwiftUI
 import FirebaseDatabase
@@ -188,8 +188,10 @@ class observer : ObservableObject {
                 let vitaminE = value?["vitaminE"] as? CGFloat ?? 0.0
                 let vitaminK = value?["vitaminK"] as? CGFloat ?? 0.0
                 let zinc = value?["zinc"] as? CGFloat ?? 0.0
+                let healthLabels = value?["health-labels"] as? [String] ?? [""]
+                let ingredientLines = value?["ingredient-lines"] as? [String] ?? [""]
                 // create new recipe object
-                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
+                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines)
                 self.recipe_data.append(info)
                 self.recipe_names.append(info.name)//
             }
@@ -270,15 +272,17 @@ struct RecipeView: View {
     var body: some View {
         VStack{
             Group{
-                Text("Calcium: " + recipe.calcium.description)
-                Text("Fiber: " + recipe.fiber.description)
-                Text("Iron: " + recipe.iron.description)
-                Text("Potassium: " +  recipe.potassium.description)
-                Text("Protein: " +  recipe.protein.description)
-                Text("Vitamin A: " +  recipe.vitaminA.description)
-                Text("Vitamin B12: " +  recipe.vitaminB12.description)
-                Text("Vitamin C: " +  recipe.vitaminC.description)
-                Text("Vitamin D: " +  recipe.vitaminD.description)
+                List{
+                    Text("Calcium: " + recipe.calcium.description)
+                    Text("Fiber: " + recipe.fiber.description)
+                    Text("Iron: " + recipe.iron.description)
+                    Text("Potassium: " +  recipe.potassium.description)
+                    Text("Protein: " +  recipe.protein.description)
+                    Text("Vitamin A: " +  recipe.vitaminA.description)
+                    Text("Vitamin B12: " +  recipe.vitaminB12.description)
+                    Text("Vitamin C: " +  recipe.vitaminC.description)
+                    Text("Vitamin D: " +  recipe.vitaminD.description)
+                    }
                 }
             
             Group{
@@ -318,6 +322,9 @@ struct Recipe : Identifiable {
     var vitaminE : CGFloat
     var vitaminK : CGFloat
     var zinc : CGFloat
+    var healthLabels: [String]
+    var ingredientLines: [String]
+    
 
 }
 	
@@ -327,21 +334,89 @@ struct FoodItemView: View {
     var body: some View {
         VStack{
             Group{
-                Text("Calcium: " + foodItem.calcium.description)
-                Text("Fiber: " + foodItem.fiber.description)
-                Text("Iron: " + foodItem.iron.description)
-                Text("Potassium: " +  foodItem.potassium.description)
-                Text("Protein: " +  foodItem.protein.description)
-                Text("Vitamin A: " +  foodItem.vitaminA.description)
-                Text("Vitamin B12: " +  foodItem.vitaminB12.description)
-                Text("Vitamin C: " +  foodItem.vitaminC.description)
-                Text("Vitamin D: " +  foodItem.vitaminD.description)
+                List{
+                    Section(header: Text("Minerals")){
+                    HStack{
+                        Text("Calcium")
+                        Spacer()
+                        Text(foodItem.calcium.description)
+                    }
+                    HStack(){
+                        Text("Fiber")
+                        Spacer()
+                        Text(foodItem.fiber.description)
+                    }
+                    HStack(){
+                        Text("Iron")
+                        Spacer()
+                        Text(foodItem.iron.description)
+                    }
+                    HStack(){
+                        Text("Potassium")
+                        Spacer()
+                        Text(foodItem.potassium.description)
+                    }
+                    HStack(){
+                        Text("Protein")
+                        Spacer()
+                        Text(foodItem.protein.description)
+                    }
+                    HStack(){
+                        Text("Zinc")
+                        Spacer()
+                        Text(foodItem.zinc.description)
+                    }
+
+                    }
+
+                    
                 }
+                    
+                
+            }
             
             Group{
-                Text("Vitamin E: " +  foodItem.vitaminE.description)
-                Text("Vitamin K: " + foodItem.vitaminK.description)
-                Text("Zinc: " + foodItem.zinc.description)
+                List{
+                    Section(header: Text("Vitamins")){
+                    HStack(){
+                        Text("Vitamin A")
+                        Spacer()
+                        Text(foodItem.vitaminA.description)
+                    }
+                    HStack(){
+                        Text("Vitamin B12")
+                        Spacer()
+                        Text(foodItem.vitaminB12.description)
+                    }
+                    HStack(){
+                        Text("Vitamin C")
+                        Spacer()
+                        Text(foodItem.vitaminC.description)
+                    }
+                    HStack(){
+                        Text("Vitamin D")
+                        Spacer()
+                        Text(foodItem.vitaminD.description)
+                        }
+                    HStack{
+                        Text("Vitamin E")
+                        Spacer()
+                        Text(foodItem.vitaminE.description)
+                    }
+
+                    HStack(){
+                        Text("Vitamin K")
+                        Spacer()
+                        Text(foodItem.vitaminK.description)
+                    }
+
+
+                    }
+                }
+            }
+            
+            
+
                 
                 
                 Picker(selection: $ounces, label: Text("Ounces")){
@@ -353,9 +428,9 @@ struct FoodItemView: View {
                     Text("5").tag(5)
                 }
                 addFoodButton(foodItem: foodItem, ounces: ounces)
-            }
+            
         }
-        }
+    }
 }
 
 struct FoodItemRow: View {

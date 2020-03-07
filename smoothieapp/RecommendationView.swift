@@ -88,7 +88,10 @@ class recipes_observer : ObservableObject {
                 let vitaminK = value?["vitaminK"] as? CGFloat ?? 0.0
                 let zinc = value?["zinc"] as? CGFloat ?? 0.0
                 // create new recipe object
-                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
+                let healthLabels = value?["health-labels"] as? [String] ?? [""]
+                let ingredientLines = value?["ingredient-lines"] as? [String] ?? [""]
+                 // create new recipe object
+                 let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines)
                 self.data.append(info)
             }
             
