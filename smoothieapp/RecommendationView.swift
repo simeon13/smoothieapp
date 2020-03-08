@@ -9,7 +9,6 @@
 import SwiftUI
 import FirebaseDatabase
 
-
 struct RecommendationView: View {
     @EnvironmentObject var userInfo : userSettings
     @ObservedObject var recipes = recipes_observer()
@@ -22,7 +21,6 @@ struct RecommendationView: View {
     }()
     
     var now = Date()
-    
     var body: some View {
         VStack(){
             Spacer()
@@ -37,12 +35,6 @@ struct RecommendationView: View {
             
             List {
                 Section (header: Text("Current Recommendations")){
-//                    ForEach(userInfo.user_profile.recommendations.indices, id: \.self){i in
-//                        Text("\(i+1) - \(self.userInfo.user_profile.recommendations[i].name)")
-//                        NavigationLink(destination: RecipeView(recipe: self.userInfo.user_profile.recommendations[i])) {
-//                            RecipeRow(recipe: self.userInfo.user_profile.recommendations[i])
-//                        }
-//                    }
                     ForEach(recipes.ranked){i in
                         NavigationLink(destination: RecipeView(recipe: i)) {
                             RecipeRow(recipe: i)
@@ -93,16 +85,47 @@ class recipes_observer : ObservableObject {
                 let dict = value as! Dictionary<String, Any>
 
                  // create new recipe object
-                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines, dict: dict)
-                self.data.append(info)
+                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines)
+                var insert = true
+                
+                // loop through and filter the health options
+//                for recipe in self.data {
+//                    for option in recipe.healthLabels {
+//                        if check_label(userInfo: self.userInfo, option: option) == false {
+//                            // if label isn't toggled, don't
+//                            insert = false
+//                        }
+//                    }
+//                }
+                
+                if insert == true {
+                    self.data.append(info)
+                }
             }
             
             // ALGORITHM
-            self.ranked.append(self.data[0])
-            self.ranked.append(self.data[1])
-            self.ranked.append(self.data[2])
-            
+            for i in self.data {
+                self.ranked.append(i)
+            }
+        //            self.ranked.append(self.data[0])
+        //            self.ranked.append(self.data[1])
+        //            self.ranked.append(self.data[2])
         })
     }
     
+}
+
+func check_label(userInfo: userSettings, option: String) -> Bool {
+    for i in userInfo.user_profile.health_options {
+        if i.name == option {
+            // check for that option is toggled
+            if i.toggle == true {
+                return true
+            }
+            else {
+                return false
+            }
+        }
+    }
+    return true
 }
