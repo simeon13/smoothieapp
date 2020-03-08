@@ -360,9 +360,9 @@ struct RecipeView: View {
                     
                     Section(header: Text("Ingredient Lines")){
                         
-                        ForEach(recipe.keys.indices){index in
+                        ForEach(recipe.ingredientLines, id: \.self){line in
                             HStack(){
-                                Text(self.recipe.keys[index])
+                                Text(line)
                             }
                         }
                     }
@@ -431,7 +431,7 @@ class Recipe : Identifiable {
         // dictionary
         self.dict = dict
         for (key,_) in dict{
-            if let stringValue = dict[key] as? [String]{
+            if (dict[key] as? CGFloat) != nil{
                 self.keys.append(key)
             }
             
