@@ -216,30 +216,104 @@ struct RecipeView: View {
     var recipe: Recipe
     var body: some View {
         VStack{
-            Group{
-                List{
-                    Text("Calcium: " + recipe.calcium.description)
-                    Text("Fiber: " + recipe.fiber.description)
-                    Text("Iron: " + recipe.iron.description)
-                    Text("Potassium: " +  recipe.potassium.description)
-                    Text("Protein: " +  recipe.protein.description)
-                    Text("Vitamin A: " +  recipe.vitaminA.description)
-                    Text("Vitamin B12: " +  recipe.vitaminB12.description)
-                    Text("Vitamin C: " +  recipe.vitaminC.description)
-                    Text("Vitamin D: " +  recipe.vitaminD.description)
+            List{
+                Group{
+                
+                    Section(header: Text("Minerals")){
+                        HStack{
+                            Text("Calcium")
+                            Spacer()
+                            Text(recipe.calcium.description)
+                        }
+                        HStack(){
+                            Text("Fiber")
+                            Spacer()
+                            Text(recipe.fiber.description)
+                        }
+                        HStack(){
+                            Text("Iron")
+                            Spacer()
+                            Text(recipe.iron.description)
+                        }
+                        HStack(){
+                            Text("Potassium")
+                            Spacer()
+                            Text(recipe.potassium.description)
+                        }
+                        HStack(){
+                            Text("Protein")
+                            Spacer()
+                            Text(recipe.protein.description)
+                        }
+                        HStack(){
+                            Text("Zinc")
+                            Spacer()
+                            Text(recipe.zinc.description)
+                        }
                     }
+                    
                 }
-            
-            Group{
-                Text("Vitamin E: " +  recipe.vitaminE.description)
-                Text("Vitamin K: " + recipe.vitaminK.description)
-                Text("Zinc: " + recipe.zinc.description)
                 
+                Group{
+
+                    Section(header: Text("Vitamins")){
+                        HStack(){
+                            Text("Vitamin A")
+                            Spacer()
+                            Text(recipe.vitaminA.description)
+                        }
+                        HStack(){
+                            Text("Vitamin B12")
+                            Spacer()
+                            Text(recipe.vitaminB12.description)
+                        }
+                        HStack(){
+                            Text("Vitamin C")
+                            Spacer()
+                            Text(recipe.vitaminC.description)
+                        }
+                        HStack(){
+                            Text("Vitamin D")
+                            Spacer()
+                            Text(recipe.vitaminD.description)
+                            }
+                        HStack{
+                            Text("Vitamin E")
+                            Spacer()
+                            Text(recipe.vitaminE.description)
+                        }
+
+                        HStack(){
+                            Text("Vitamin K")
+                            Spacer()
+                            Text(recipe.vitaminK.description)
+                        }
+                    }
+                    
+                }
                 
- 
+                Group{
+
+                    Section(header: Text("Health Labels")){
+                        ForEach(recipe.healthLabels, id: \.self){label in
+                            HStack(){
+                                Text(label)
+                            }
+                        }
+                    }
+                    
+                    Section(header: Text("Ingredient Lines")){
+                        ForEach(recipe.ingredientLines, id: \.self){line in
+                            HStack(){
+                                Text(line)
+                            }
+                        }
+                    }
+                    
+                }
             }
         }
-        }
+    }
 }
 
 struct RecipeRow: View {
@@ -278,39 +352,40 @@ struct FoodItemView: View {
     @State private var ounces = 0
     var body: some View {
         VStack{
+            List{
             Group{
-                List{
+                
                     Section(header: Text("Minerals")){
-                    HStack{
-                        Text("Calcium")
-                        Spacer()
-                        Text(foodItem.calcium.description)
-                    }
-                    HStack(){
-                        Text("Fiber")
-                        Spacer()
-                        Text(foodItem.fiber.description)
-                    }
-                    HStack(){
-                        Text("Iron")
-                        Spacer()
-                        Text(foodItem.iron.description)
-                    }
-                    HStack(){
-                        Text("Potassium")
-                        Spacer()
-                        Text(foodItem.potassium.description)
-                    }
-                    HStack(){
-                        Text("Protein")
-                        Spacer()
-                        Text(foodItem.protein.description)
-                    }
-                    HStack(){
-                        Text("Zinc")
-                        Spacer()
-                        Text(foodItem.zinc.description)
-                    }
+                        HStack{
+                            Text("Calcium")
+                            Spacer()
+                            Text(foodItem.calcium.description)
+                        }
+                        HStack(){
+                            Text("Fiber")
+                            Spacer()
+                            Text(foodItem.fiber.description)
+                        }
+                        HStack(){
+                            Text("Iron")
+                            Spacer()
+                            Text(foodItem.iron.description)
+                        }
+                        HStack(){
+                            Text("Potassium")
+                            Spacer()
+                            Text(foodItem.potassium.description)
+                        }
+                        HStack(){
+                            Text("Protein")
+                            Spacer()
+                            Text(foodItem.protein.description)
+                        }
+                        HStack(){
+                            Text("Zinc")
+                            Spacer()
+                            Text(foodItem.zinc.description)
+                        }
 
                     }
 
@@ -318,62 +393,63 @@ struct FoodItemView: View {
                 }
                     
                 
-            }
+            
             
             Group{
-                List{
+               
                     Section(header: Text("Vitamins")){
-                    HStack(){
-                        Text("Vitamin A")
-                        Spacer()
-                        Text(foodItem.vitaminA.description)
-                    }
-                    HStack(){
-                        Text("Vitamin B12")
-                        Spacer()
-                        Text(foodItem.vitaminB12.description)
-                    }
-                    HStack(){
-                        Text("Vitamin C")
-                        Spacer()
-                        Text(foodItem.vitaminC.description)
-                    }
-                    HStack(){
-                        Text("Vitamin D")
-                        Spacer()
-                        Text(foodItem.vitaminD.description)
+                        HStack(){
+                            Text("Vitamin A")
+                            Spacer()
+                            Text(foodItem.vitaminA.description)
                         }
-                    HStack{
-                        Text("Vitamin E")
-                        Spacer()
-                        Text(foodItem.vitaminE.description)
-                    }
+                        HStack(){
+                            Text("Vitamin B12")
+                            Spacer()
+                            Text(foodItem.vitaminB12.description)
+                        }
+                        HStack(){
+                            Text("Vitamin C")
+                            Spacer()
+                            Text(foodItem.vitaminC.description)
+                        }
+                        HStack(){
+                            Text("Vitamin D")
+                            Spacer()
+                            Text(foodItem.vitaminD.description)
+                            }
+                        HStack{
+                            Text("Vitamin E")
+                            Spacer()
+                            Text(foodItem.vitaminE.description)
+                        }
 
-                    HStack(){
-                        Text("Vitamin K")
-                        Spacer()
-                        Text(foodItem.vitaminK.description)
+                        HStack(){
+                            Text("Vitamin K")
+                            Spacer()
+                            Text(foodItem.vitaminK.description)
+                        }
                     }
-
-
-                    }
-                }
+                
             }
             
             
 
                 
-                
-                Picker(selection: $ounces, label: Text("Ounces")){
-                    Text("0").tag(0)
-                    Text("1").tag(1)
-                    Text("2").tag(2)
-                    Text("3").tag(3)
-                    Text("4").tag(4)
-                    Text("5").tag(5)
+                Section(header: Text("Choose amount")){
+                    HStack(){
+                        Picker(selection: $ounces, label: Text("Ounces")){
+                            Text("0").tag(0)
+                            Text("1").tag(1)
+                            Text("2").tag(2)
+                            Text("3").tag(3)
+                            Text("4").tag(4)
+                            Text("5").tag(5)
+                        }
+                        addFoodButton(foodItem: foodItem, ounces: ounces)
+                    }
                 }
-                addFoodButton(foodItem: foodItem, ounces: ounces)
-            
+            }
         }
     }
 }
@@ -411,7 +487,7 @@ struct addFoodButton: View {
             }){
                 Text("add food")
                 .padding()
-                .background(Color.pink)
+                .background(Color.black)
                 
                 .alert(isPresented: $alertSaved){() -> Alert in
                     Alert (title: Text("Saved food item!"), message:	 Text("go back to items to add other foods"))
