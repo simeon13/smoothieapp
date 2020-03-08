@@ -190,8 +190,9 @@ class observer : ObservableObject {
                 let zinc = value?["zinc"] as? CGFloat ?? 0.0
                 let healthLabels = value?["health-labels"] as? [String] ?? [""]
                 let ingredientLines = value?["ingredient-lines"] as? [String] ?? [""]
+                let dict = value as! Dictionary<String, Any>
                 // create new recipe object
-                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines)
+                let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines, dict: dict)
                 self.recipe_data.append(info)
                 self.recipe_names.append(info.name)//
             }
@@ -358,9 +359,10 @@ struct RecipeView: View {
                     }
                     
                     Section(header: Text("Ingredient Lines")){
-                        ForEach(recipe.ingredientLines, id: \.self){line in
+                        
+                        ForEach(recipe.keys.indices){index in
                             HStack(){
-                                Text(line)
+                                Text(self.recipe.keys[index])
                             }
                         }
                     }
@@ -378,7 +380,7 @@ struct RecipeRow: View {
     }
 }
 
-struct Recipe : Identifiable {
+class Recipe : Identifiable {
     var id : String
     var name : String
     var url : String
@@ -398,7 +400,44 @@ struct Recipe : Identifiable {
     var zinc : CGFloat
     var healthLabels: [String]
     var ingredientLines: [String]
+    var dict: Dictionary<String, Any>
+    var keys: [String]
     
+    init(id: String, name: String, url: String, image: String, calcium: CGFloat, fiber: CGFloat, iron: CGFloat, magnesium: CGFloat, potassium: CGFloat, protein: CGFloat, vitaminA: CGFloat, vitaminB12: CGFloat, vitaminC: CGFloat, vitaminD: CGFloat, vitaminE: CGFloat, vitaminK: CGFloat, zinc: CGFloat,  healthLabels: [String], ingredientLines : [String], dict: Dictionary<String, Any>){
+
+        self.id = id
+        self.name = name
+        self.url = url
+        self.image = image
+        self.calcium = calcium
+        self.fiber = fiber
+        self.iron = iron
+        self.magnesium = magnesium
+        self.potassium = potassium
+        self.protein = protein
+        self.vitaminA = vitaminA
+        self.vitaminB12 = vitaminB12
+        self.vitaminC = vitaminC
+        self.vitaminD = vitaminD
+        self.vitaminE = vitaminE
+        self.vitaminK = vitaminK
+        self.zinc = zinc
+        self.keys = []
+        
+        // lists
+        self.healthLabels = healthLabels
+        self.ingredientLines = ingredientLines
+        
+        // dictionary
+        self.dict = dict
+        for (key,_) in dict{
+            if let stringValue = dict[key] as? [String]{
+                self.keys.append(key)
+            }
+            
+        }
+        
+    }
 
 }
 	
