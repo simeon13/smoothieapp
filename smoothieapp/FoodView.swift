@@ -14,12 +14,32 @@ struct FoodView: View {
     @ObservedObject var data = observer()
     
     @State private var searchTerm : String = ""
+    @State var pickerselection = 0
     
     var body: some View {
         NavigationView {
             List {
                 //search bar
                 SearchBar(text: $searchTerm)
+                
+                Picker(selection: $pickerselection, label: Text("Stats"))
+                {
+                    Text("All").tag(0)
+                    Text("Recipes").tag(1)
+                    Text("Vegetables").tag(2)
+                    Text("Dairy").tag(3)
+                    
+                    }.pickerStyle(SegmentedPickerStyle()).padding(.horizontal, 10).colorInvert()
+                
+                Picker(selection: $pickerselection, label: Text("Stats"))
+                {
+                    Text("Fish").tag(4)
+                    Text("Fruits").tag(5)
+                    Text("Grains").tag(6)
+                    Text("Poultry").tag(7)
+                    
+                    }.pickerStyle(SegmentedPickerStyle()).padding(.horizontal, 10).colorInvert()
+                
 //                Section(header: Text("Search Results")){
 //                ForEach(self.data.food_data.filter{
 //                    self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
@@ -35,6 +55,7 @@ struct FoodView: View {
 //                }
 //                }
                 // Recipes
+                if pickerselection == 0 || pickerselection == 1{
                 Section(header: Text("Recipes")) {
                     ForEach(self.data.recipe_names.filter{
                         self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
@@ -48,8 +69,10 @@ struct FoodView: View {
                         }
                     }
                 }
+                }
 
                 // Foods
+                if pickerselection == 0 || pickerselection == 2{
                 Section(header: Text("Vegetables")) {
                     ForEach(self.data.vegetable_names.filter{
                         self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
@@ -63,7 +86,9 @@ struct FoodView: View {
                         }
                     }
                 }
+                }
 
+                if pickerselection == 0 || pickerselection == 3{
                 Section(header: Text("Dairy")) {
                     ForEach(self.data.dairy_names.filter{
                         self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
@@ -77,7 +102,9 @@ struct FoodView: View {
                         }
                     }
                 }
+                }
 
+                if pickerselection == 0 || pickerselection == 4{
                 Section(header: Text("Fish")) {
                     ForEach(self.data.fish_names.filter{
                         self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
@@ -91,7 +118,9 @@ struct FoodView: View {
                         }
                     }
                 }
+                }
 
+                if pickerselection == 0 || pickerselection == 5{
                 Section(header: Text("Fruits")) {
                     ForEach(data.fruit_names.filter{
                         self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
@@ -105,7 +134,9 @@ struct FoodView: View {
                         }
                     }
                 }
+                }
 
+                if pickerselection == 0 || pickerselection == 6{
                 Section(header: Text("Grains")) {
                     ForEach(data.grain_names.filter{
                         self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
@@ -119,7 +150,9 @@ struct FoodView: View {
                         }
                     }
                 }
-
+                }
+                
+                if pickerselection == 0 || pickerselection == 7{
                 Section(header: Text("Poultry")) {
                     ForEach(self.data.poultry_names.filter{
                         self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
@@ -132,6 +165,7 @@ struct FoodView: View {
                             }
                         }
                     }
+                }
                 }
             }
             .navigationBarTitle("Items")
@@ -360,9 +394,9 @@ struct RecipeView: View {
                     
                     Section(header: Text("Ingredient Lines")){
                         
-                        ForEach(recipe.keys.indices){index in
+                        ForEach(recipe.ingredientLines, id: \.self){line in
                             HStack(){
-                                Text(self.recipe.keys[index])
+                                Text(line)
                             }
                         }
                     }
@@ -431,7 +465,7 @@ class Recipe : Identifiable {
         // dictionary
         self.dict = dict
         for (key,_) in dict{
-            if let stringValue = dict[key] as? [String]{
+            if (dict[key] as? CGFloat) != nil{
                 self.keys.append(key)
             }
             
