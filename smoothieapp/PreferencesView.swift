@@ -36,9 +36,24 @@ struct PreferencesView: View {
                             }
                         }
                         DatePicker("Notification Time", selection: $userInfo.user_profile.time, displayedComponents: .hourAndMinute)
-                    }
+                        
+                        Button("Schedule Notifications") {
+                            let content = UNMutableNotificationContent()
+                            content.title = "View your recommendations"
+                            content.subtitle = "Your recommendations are ready!"
+                            content.sound = UNNotificationSound.default
 
-                    
+                            var calendar = Calendar.current
+                            calendar.timeZone = TimeZone.current
+                            let notifTime = self.userInfo.user_profile.time
+                            let components = Calendar.current.dateComponents([.hour, .minute], from: notifTime)
+                            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: true)
+
+                            let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+
+                            UNUserNotificationCenter.current().add(request)
+                        }
+                    }
                     Section(header: Text("Health Options")) {
                         List {
                             ForEach (0..<6){ i in
@@ -48,8 +63,7 @@ struct PreferencesView: View {
                             } 
                         }
                     }
-            }
-            .navigationBarTitle("Preferences")
+            }.navigationBarTitle("Preferences")
         }
     }
 }
