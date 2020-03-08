@@ -9,6 +9,7 @@
 import SwiftUI
 import FirebaseDatabase
 
+
 struct RecommendationView: View {
     @EnvironmentObject var userInfo : userSettings
     @ObservedObject var recipes = recipes_observer()
@@ -54,6 +55,7 @@ struct RecommendationView_Previews: PreviewProvider {
 }
 
 class recipes_observer : ObservableObject {
+    @EnvironmentObject var userInfo : userSettings
     @Published var data = [Recipe]()
     @Published var ranked = [Recipe]()
 
@@ -88,15 +90,15 @@ class recipes_observer : ObservableObject {
                 let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines, dict: dict)
                 var insert = true
                 
-                // loop through and filter the health options
-//                for recipe in self.data {
-//                    for option in recipe.healthLabels {
-//                        if check_label(userInfo: self.userInfo, option: option) == false {
-//                            // if label isn't toggled, don't
-//                            insert = false
-//                        }
-//                    }
-//                }
+//                 loop through and filter the health options
+                for recipe in self.data {
+                    for option in recipe.healthLabels {
+                        if check_label(userInfo: self.userInfo, option: option) == false {
+                            // if label isn't toggled, don't
+                            insert = false
+                        }
+                    }
+                }
                 
                 if insert == true {
                     self.data.append(info)
