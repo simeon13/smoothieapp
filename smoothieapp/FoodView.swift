@@ -20,75 +20,116 @@ struct FoodView: View {
             List {
                 //search bar
                 SearchBar(text: $searchTerm)
-                ForEach(self.data.food_data.filter{
-                    self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
-                }, id: \.self){
-                    name in
-                    ForEach(self.data.items){i in
-                        if name == i.name{
-                            NavigationLink(destination: FoodItemView(foodItem: i)){
-                                FoodItemRow(foodItem: i)
+//                Section(header: Text("Search Results")){
+//                ForEach(self.data.food_data.filter{
+//                    self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
+//                }, id: \.self){
+//                    name in
+//                    ForEach(self.data.items){i in
+//                        if name == i.name{
+//                            NavigationLink(destination: FoodItemView(foodItem: i)){
+//                                FoodItemRow(foodItem: i)
+//                            }
+//                        }
+//                    }
+//                }
+//                }
+                // Recipes
+                Section(header: Text("Recipes")) {
+                    ForEach(self.data.recipe_names.filter{
+                        self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
+                    }, id: \.self){name in
+                        ForEach(self.data.recipe_data){ i in
+                            if name == i.name{
+                                NavigationLink(destination: RecipeView(recipe: i)) {
+                                    RecipeRow(recipe: i)
+                                }
                             }
                         }
                     }
                 }
-                // Recipes
-                Section(header: Text("Recipes")) {
-                    ForEach(data.recipe_data){i in
-                        NavigationLink(destination: RecipeView(recipe: i)) {
-                            RecipeRow(recipe: i)
-                            
-                            
-                          
-                        }
-                    }
-                }
-                
+
                 // Foods
                 Section(header: Text("Vegetables")) {
-                    ForEach(data.vegetable_data){i in
-                        NavigationLink(destination: FoodItemView(foodItem: i)) {
-                            FoodItemRow(foodItem: i)
+                    ForEach(self.data.vegetable_names.filter{
+                        self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
+                    }, id: \.self){name in
+                        ForEach(self.data.vegetable_data){i in
+                            if name == i.name{
+                                NavigationLink(destination: FoodItemView(foodItem: i)) {
+                                    FoodItemRow(foodItem: i)
+                                }
+                            }
                         }
                     }
                 }
-                
+
                 Section(header: Text("Dairy")) {
-                    ForEach(data.dairy_data){i in
-                        NavigationLink(destination: FoodItemView(foodItem: i)) {
-                            FoodItemRow(foodItem: i)
+                    ForEach(self.data.dairy_names.filter{
+                        self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
+                    }, id: \.self){name in
+                        ForEach(self.data.dairy_data){i in
+                            if name == i.name{
+                                NavigationLink(destination: FoodItemView(foodItem: i)) {
+                                    FoodItemRow(foodItem: i)
+                                }
+                            }
                         }
                     }
                 }
-                
+
                 Section(header: Text("Fish")) {
-                    ForEach(data.fish_data){i in
-                        NavigationLink(destination: FoodItemView(foodItem: i)) {
-                            FoodItemRow(foodItem: i)
+                    ForEach(self.data.fish_names.filter{
+                        self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
+                    }, id: \.self){name in
+                        ForEach(self.data.fish_data){i in
+                            if name == i.name{
+                                NavigationLink(destination: FoodItemView(foodItem: i)) {
+                                    FoodItemRow(foodItem: i)
+                                }
+                            }
                         }
                     }
                 }
-                
+
                 Section(header: Text("Fruits")) {
-                    ForEach(data.fruit_data){i in
-                        NavigationLink(destination: FoodItemView(foodItem: i)) {
-                            FoodItemRow(foodItem: i)
+                    ForEach(data.fruit_names.filter{
+                        self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
+                    }, id: \.self){name in
+                        ForEach(self.data.fruit_data){i in
+                            if name == i.name{
+                                NavigationLink(destination: FoodItemView(foodItem: i)) {
+                                    FoodItemRow(foodItem: i)
+                                }
+                            }
                         }
                     }
                 }
-                
+
                 Section(header: Text("Grains")) {
-                    ForEach(data.grain_data){i in
-                        NavigationLink(destination: FoodItemView(foodItem: i)) {
-                            FoodItemRow(foodItem: i)
+                    ForEach(data.grain_names.filter{
+                        self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
+                    }, id: \.self){name in
+                        ForEach(self.data.grain_data){i in
+                            if name == i.name{
+                                NavigationLink(destination: FoodItemView(foodItem: i)) {
+                                    FoodItemRow(foodItem: i)
+                                }
+                            }
                         }
                     }
                 }
-                
+
                 Section(header: Text("Poultry")) {
-                    ForEach(data.poultry_data){i in
-                        NavigationLink(destination: FoodItemView(foodItem: i)) {
-                            FoodItemRow(foodItem: i)
+                    ForEach(self.data.poultry_names.filter{
+                        self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
+                    }, id: \.self){name in
+                        ForEach(self.data.poultry_data){i in
+                            if name == i.name{
+                                NavigationLink(destination: FoodItemView(foodItem: i)) {
+                                    FoodItemRow(foodItem: i)
+                                }
+                            }
                         }
                     }
                 }
@@ -109,13 +150,20 @@ struct FoodView_Previews: PreviewProvider {
 class observer : ObservableObject {
     @Published var recipe_data = [Recipe]()
     @Published var vegetable_data = [FoodItem]()
+    @Published var vegetable_names = [String]()
     @Published var dairy_data = [FoodItem]()
+    @Published var dairy_names = [String]()
     @Published var fish_data = [FoodItem]()
+    @Published var fish_names = [String]()
     @Published var fruit_data = [FoodItem]()
+    @Published var fruit_names = [String]()
     @Published var grain_data = [FoodItem]()
+    @Published var grain_names = [String]()
     @Published var poultry_data = [FoodItem]()
+    @Published var poultry_names = [String]()
     @Published var food_data = [String]()
     @Published var items = [FoodItem]()
+    @Published var recipe_names = [String]()
     
     
     init(){
@@ -145,6 +193,7 @@ class observer : ObservableObject {
                 // create new recipe object
                 let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines)
                 self.recipe_data.append(info)
+                self.recipe_names.append(info.name)//
             }
         })
         
@@ -174,30 +223,36 @@ class observer : ObservableObject {
                     if (entry == "Vegetables"){
                         self.vegetable_data.append(food_item)
                         self.food_data.append(food_item.name)
+                        self.vegetable_names.append(food_item.name)
                         self.items.append(food_item)
                     }
                     if (entry == "dairy"){
                         self.dairy_data.append(food_item)
+                        self.dairy_names.append(food_item.name)
                         self.food_data.append(food_item.name)
                         self.items.append(food_item)
                     }
                     if (entry == "fish"){
                         self.fish_data.append(food_item)
+                        self.fish_names.append(food_item.name)
                         self.food_data.append(food_item.name)
                         self.items.append(food_item)
                     }
                     if (entry == "fruit"){
                         self.fruit_data.append(food_item)
+                        self.fruit_names.append(food_item.name)
                         self.food_data.append(food_item.name)
                         self.items.append(food_item)
                     }
                     if (entry == "grains"){
                         self.grain_data.append(food_item)
+                        self.grain_names.append(food_item.name)
                         self.food_data.append(food_item.name)
                         self.items.append(food_item)
                     }
                     if (entry == "poultry"){
                         self.poultry_data.append(food_item)
+                        self.poultry_names.append(food_item.name)
                         self.food_data.append(food_item.name)
                         self.items.append(food_item)
                     }
