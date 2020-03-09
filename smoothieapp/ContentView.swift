@@ -185,9 +185,9 @@ class userSettings : ObservableObject {
             health_options.append(HealthOptions(id: "id", name: i, toggle: false))
         }
                 
-        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date(), weekly: [TotalValues](), ranked_recipes: [Recipe]())
+        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date(), weekly: [TotalValues](), ranked_recipes: [Recipe](), needed_nutrients: [String]())
             
-        total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
+        total_values = TotalValues(id: "id", calcium: 90.0, fiber: 80.0, iron: 70.0, magnesium: 60.0, potassium: 50.0, protein: 40.0, vitaminA: 30.0, vitaminB12: 20.0, vitaminC: 25.0, vitaminD: 47.0, vitaminE: 5.0, vitaminK: 3.0, zinc: 8.0)
         
         max_values = MaxValues(id: "id", calcium: 1.0, fiber: 1.0, iron: 1.0, magnesium: 1.0, potassium: 1.0, protein: 1.0, vitaminA: 1.0, vitaminB12: 1.0, vitaminC: 1.0, vitaminD: 1.0, vitaminE: 1.0, vitaminK: 1.0, zinc: 1.0)
                 
@@ -244,7 +244,7 @@ struct UserProfile : Identifiable {
     var time: Date
     var weekly: [TotalValues]
     var ranked_recipes: [Recipe]
-    
+    var needed_nutrients: [String]
 }
 
 struct TotalValues : Identifiable {
@@ -367,6 +367,7 @@ extension Date {
 func grab_recommendations(userInfo: userSettings){
     var data = [Recipe]()
     userInfo.user_profile.ranked_recipes.removeAll()
+    userInfo.user_profile.needed_nutrients.removeAll()
     
     let ref = Database.database().reference(withPath: "recipes")
     ref.observeSingleEvent(of: .value, with: { (snapshot) in
@@ -402,140 +403,17 @@ func grab_recommendations(userInfo: userSettings){
         
         // START RANKING ALL THE RECIPES
         let nutrients_dict = nutrient_rank(userInfo: userInfo)
-        rank_recipes(userInfo: userInfo, recipes: data, dict: nutrients_dict)
+        var ranked_dict = [String : CGFloat]()
+        print(nutrients_dict.sorted { $0.1 < $1.1 })
+
+        var iter = 0
+        for (nutrient, percent) in (nutrients_dict.sorted { $0.1 < $1.1 }) {
+            userInfo.user_profile.needed_nutrients.append(nutrient)
+            ranked_dict[nutrient] = percent
+            iter += 1
+            if iter == 3 { break }
+        }
+        // rank recipes based on top 3 nutrients
+        rank_recipes(userInfo: userInfo, recipes: data, dict: ranked_dict)
     })
-}
-
-func check_label(userInfo: userSettings, healthLabels: [String]) -> Bool {
-    for option in userInfo.user_profile.health_options {
-        // if toggled, check if it is healthLabels
-        if option.toggle == true {
-            // if it does not contain it, return false
-            if !healthLabels.contains(option.name){
-                return false
-            }
-        }
-    }
-    return true
-}
-
-func nutrient_rank(userInfo: userSettings) -> [CGFloat : String] {
-    var dict = [CGFloat : String]()
-//    let calcium = (userInfo.total_values.calcium / userInfo.max_values.calcium)
-//    let fiber = (userInfo.total_values.fiber / userInfo.max_values.fiber)
-//    let iron = (userInfo.total_values.iron / userInfo.max_values.iron)
-//    let magnesium = (userInfo.total_values.magnesium / userInfo.max_values.magnesium)
-//    let potassium = (userInfo.total_values.potassium / userInfo.max_values.potassium)
-//    let protein = (userInfo.total_values.protein / userInfo.max_values.protein)
-//    let vitaminA = (userInfo.total_values.vitaminA / userInfo.max_values.vitaminA)
-//    let vitaminB12 = (userInfo.total_values.vitaminB12 / userInfo.max_values.vitaminB12)
-//    let vitaminC = (userInfo.total_values.vitaminC / userInfo.max_values.vitaminC)
-//    let vitaminD = (userInfo.total_values.vitaminD / userInfo.max_values.vitaminD)
-//    let vitaminE = (userInfo.total_values.vitaminE / userInfo.max_values.vitaminE)
-//    let vitaminK = (userInfo.total_values.vitaminK / userInfo.max_values.vitaminK)
-//    let zinc = (userInfo.total_values.zinc / userInfo.max_values.zinc)
-    
-    let calcium = CGFloat(0.18)
-    let fiber = CGFloat(0.25)
-    let iron = CGFloat(0.28)
-    let magnesium = CGFloat(0.30)
-    let potassium = CGFloat(0.40)
-    let protein = CGFloat(0.50)
-    let vitaminA = CGFloat(0.90)
-    let vitaminB12 = CGFloat(0.87)
-    let vitaminC = CGFloat(0.81)
-    let vitaminD = CGFloat(0.75)
-    let vitaminE = CGFloat(0.71)
-    let vitaminK = CGFloat(0.65)
-    let zinc = CGFloat(0.60)
-    
-    dict[calcium] = "calcium"
-    dict[fiber] = "fiber"
-    dict[iron] = "iron"
-    dict[magnesium] = "magnesium"
-    dict[potassium] = "potassium"
-    dict[protein] = "protein"
-    dict[vitaminA] = "vitaminA"
-    dict[vitaminB12] = "vitaminB12"
-    dict[vitaminC] = "vitaminC"
-    dict[vitaminD] = "vitaminD"
-    dict[vitaminE] = "vitaminE"
-    dict[vitaminK] = "vitaminK"
-    dict[zinc] = "zinc"
-    
-    return dict
-}
-
-
-func rank_recipes(userInfo: userSettings, recipes: [Recipe], dict: [CGFloat:String]){
-    var recipe_scores = [CGFloat : Int]()
-    for (index, recipe) in recipes.enumerated() {
-        // compute a score for the recipe
-        // get percentage increase for least3 nutrients (most needed)
-        var score = CGFloat(0.0)
-        var m = 0
-        for (percent, nutrient) in dict.sorted(by: <) {
-            // grab nutrient data and compare it to max value
-            score += percent_increase(userInfo: userInfo, nutrient: nutrient, recipe: recipe)
-            
-            m += 1
-            if m == 3{ // break after least3
-                break
-            }
-        }
-        recipe_scores[score] = index
-    }
-    
-    // sort dict by keys and grab top 3 values
-    var i = 0
-    for (score, index) in recipe_scores.sorted(by: >){
-        userInfo.user_profile.ranked_recipes.append(recipes[index])
-        i += 1
-        if i == 3{ // break after top3
-            break
-        }
-    }
-}
-
-func percent_increase(userInfo: userSettings, nutrient: String, recipe: Recipe) -> CGFloat {
-    if nutrient == "calcium" {
-        return (recipe.calcium / userInfo.max_values.calcium)
-    }
-    if nutrient == "fiber" {
-        return (recipe.fiber / userInfo.max_values.fiber)
-    }
-    if nutrient == "iron" {
-        return (recipe.iron / userInfo.max_values.iron)
-    }
-    if nutrient == "magnesium" {
-        return (recipe.magnesium / userInfo.max_values.magnesium)
-    }
-    if nutrient == "potassium" {
-        return (recipe.potassium / userInfo.max_values.potassium)
-    }
-    if nutrient == "protein" {
-        return (recipe.protein / userInfo.max_values.protein)
-    }
-    if nutrient == "vitaminA" {
-        return (recipe.vitaminA / userInfo.max_values.vitaminA)
-    }
-    if nutrient == "vitaminB12" {
-        return (recipe.vitaminB12 / userInfo.max_values.vitaminB12)
-    }
-    if nutrient == "vitaminC" {
-           return (recipe.vitaminC / userInfo.max_values.vitaminC)
-    }
-    if nutrient == "vitaminD" {
-           return (recipe.vitaminD / userInfo.max_values.vitaminD)
-    }
-    if nutrient == "vitaminE" {
-           return (recipe.vitaminE / userInfo.max_values.vitaminE)
-    }
-    if nutrient == "vitaminK" {
-           return (recipe.vitaminK / userInfo.max_values.vitaminK)
-    }
-    if nutrient == "zinc" {
-           return (recipe.zinc / userInfo.max_values.zinc)
-    }
-    return 0
 }
