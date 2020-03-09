@@ -215,12 +215,12 @@ class observer : ObservableObject {
                 let magnesium = value?["magnesium"] as? CGFloat ?? 0.0
                 let potassium = value?["potassium"] as? CGFloat ?? 0.0
                 let protein = value?["protein"] as? CGFloat ?? 0.0
-                let vitaminA = value?["vitaminA"] as? CGFloat ?? 0.0
-                let vitaminB12 = value?["vitaminB12"] as? CGFloat ?? 0.0
-                let vitaminC = value?["vitaminC"] as? CGFloat ?? 0.0
-                let vitaminD = value?["vitaminD"] as? CGFloat ?? 0.0
-                let vitaminE = value?["vitaminE"] as? CGFloat ?? 0.0
-                let vitaminK = value?["vitaminK"] as? CGFloat ?? 0.0
+                let vitaminA = value?["vitamin-A"] as? CGFloat ?? 0.0
+                let vitaminB12 = value?["vitamin-B12"] as? CGFloat ?? 0.0
+                let vitaminC = value?["vitamin-C"] as? CGFloat ?? 0.0
+                let vitaminD = value?["vitamin-D"] as? CGFloat ?? 0.0
+                let vitaminE = value?["vitamin-E"] as? CGFloat ?? 0.0
+                let vitaminK = value?["vitamin-K"] as? CGFloat ?? 0.0
                 let zinc = value?["zinc"] as? CGFloat ?? 0.0
                 let healthLabels = value?["health-labels"] as? [String] ?? [""]
                 let ingredientLines = value?["ingredient-lines"] as? [String] ?? [""]
@@ -228,7 +228,7 @@ class observer : ObservableObject {
                 // create new recipe object
                 let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines, dict: dict)
                 self.recipe_data.append(info)
-                self.recipe_names.append(info.name)//
+                self.recipe_names.append(info.name)
             }
         })
         
@@ -246,12 +246,12 @@ class observer : ObservableObject {
                     let magnesium = value?["magnesium"] as? CGFloat ?? 0
                     let potassium = value?["potassium"] as? CGFloat ?? 0
                     let protein = value?["protein"] as? CGFloat ?? 0
-                    let vitaminA = value?["vitaminA"] as? CGFloat ?? 0
-                    let vitaminB12 = value?["vitaminB12"] as? CGFloat ?? 0
-                    let vitaminC = value?["vitaminC"] as? CGFloat ?? 0
-                    let vitaminD = value?["vitaminD"] as? CGFloat ?? 0
-                    let vitaminE = value?["vitaminE"] as? CGFloat ?? 0
-                    let vitaminK = value?["vitaminK"] as? CGFloat ?? 0
+                    let vitaminA = value?["vitamin-A"] as? CGFloat ?? 0
+                    let vitaminB12 = value?["vitamin-B12"] as? CGFloat ?? 0
+                    let vitaminC = value?["vitamin-C"] as? CGFloat ?? 0
+                    let vitaminD = value?["vitamin-D"] as? CGFloat ?? 0
+                    let vitaminE = value?["vitamin-E"] as? CGFloat ?? 0
+                    let vitaminK = value?["vitamin-K"] as? CGFloat ?? 0
                     let zinc = value?["zinc"] as? CGFloat ?? 0
                     // create new foodItem object
                     let food_item = FoodItem(id: name, name: name, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
