@@ -12,7 +12,7 @@ import FirebaseDatabase
 
 struct RecommendationView: View {
     @EnvironmentObject var userInfo : userSettings
-
+    
     let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
@@ -34,13 +34,13 @@ struct RecommendationView: View {
                 .fontWeight(.semibold)
             
             List {
-                Section (header: Text("Most Needed Nutrients")){
+                Section (header: Text("Most Needed Nutrients: Top 3")){
                     ForEach(userInfo.user_profile.needed_nutrients, id: \.self){ i in
                         NeededRow(nutrient: i)
                     }
                 }
 
-                Section (header: Text("Current Recommendations")){
+                Section (header: Text("Current Recommendations: Top 3")){
                     ForEach(userInfo.user_profile.ranked_recipes){ i in
                         NavigationLink(destination: RecipeView(recipe: i)) {
                             RecipeRow(recipe: i)
@@ -106,8 +106,6 @@ func grab_recommendations(userInfo: userSettings){
         // START RANKING ALL THE RECIPES
         let nutrients_dict = nutrient_rank(userInfo: userInfo)
         var ranked_dict = [String : CGFloat]()
-        print(nutrients_dict.sorted { $0.1 < $1.1 })
-
         var iter = 0
         for (nutrient, percent) in (nutrients_dict.sorted { $0.1 < $1.1 }) {
             userInfo.user_profile.needed_nutrients.append(nutrient)
