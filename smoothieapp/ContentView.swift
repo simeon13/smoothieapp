@@ -184,8 +184,19 @@ class userSettings : ObservableObject {
         for i in hlist {
             health_options.append(HealthOptions(id: "id", name: i, toggle: false))
         }
-                
-        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date(), weekly: [TotalValues](), ranked_recipes: [Recipe]())
+        
+        let day = 0...4
+        let nutrient = 0...12
+        var weekly_values = [[CGFloat]]()
+        for _ in nutrient{
+            var nv = [CGFloat]()
+            for _ in day{
+                nv.append(CGFloat.random(in: 120..<201))
+            }
+            weekly_values.append(nv)
+        }
+        
+        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date(), weekly: weekly_values, ranked_recipes: [Recipe]())
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
@@ -242,7 +253,7 @@ struct UserProfile : Identifiable {
     var allergies : [String]
     var health_options : [HealthOptions]
     var time: Date
-    var weekly: [TotalValues]
+    var weekly: [[CGFloat]]
     var ranked_recipes: [Recipe]
     
 }
@@ -262,6 +273,23 @@ struct TotalValues : Identifiable {
     var vitaminE : CGFloat
     var vitaminK : CGFloat
     var zinc : CGFloat
+}
+
+struct WeeklyValues : Identifiable {
+    var id : String
+    var calcium : [CGFloat]
+    var fiber : [CGFloat]
+    var iron : [CGFloat]
+    var magnesium : [CGFloat]
+    var potassium : [CGFloat]
+    var protein : [CGFloat]
+    var vitaminA : [CGFloat]
+    var vitaminB12 : [CGFloat]
+    var vitaminC : [CGFloat]
+    var vitaminD : [CGFloat]
+    var vitaminE : [CGFloat]
+    var vitaminK : [CGFloat]
+    var zinc : [CGFloat]
 }
 
 struct MaxValues : Identifiable {
