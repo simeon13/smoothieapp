@@ -187,7 +187,7 @@ class userSettings : ObservableObject {
                 
         user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date(), weekly: [TotalValues](), ranked_recipes: [Recipe](), needed_nutrients: [String]())
             
-        total_values = TotalValues(id: "id", calcium: 90.0, fiber: 80.0, iron: 70.0, magnesium: 60.0, potassium: 50.0, protein: 40.0, vitaminA: 30.0, vitaminB12: 20.0, vitaminC: 25.0, vitaminD: 47.0, vitaminE: 5.0, vitaminK: 3.0, zinc: 8.0)
+        total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
         max_values = MaxValues(id: "id", calcium: 1.0, fiber: 1.0, iron: 1.0, magnesium: 1.0, potassium: 1.0, protein: 1.0, vitaminA: 1.0, vitaminB12: 1.0, vitaminC: 1.0, vitaminD: 1.0, vitaminE: 1.0, vitaminK: 1.0, zinc: 1.0)
                 
