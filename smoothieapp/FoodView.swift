@@ -9,6 +9,18 @@
 import SwiftUI
 import FirebaseDatabase
 
+// for string formatting
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
+}
+
+
 struct FoodView: View {
     @EnvironmentObject var userInfo : userSettings
     @ObservedObject var data = observer()
@@ -17,7 +29,7 @@ struct FoodView: View {
     @State var pickerselection = 0
     
     var body: some View {
-        NavigationView {
+        NavigationView{
             List {
                 //search bar
                 SearchBar(text: $searchTerm)
@@ -172,7 +184,9 @@ struct FoodView: View {
             .listStyle(GroupedListStyle())
         }
         .navigationBarTitle("Food Database", displayMode: .inline)
+    
     }
+    
 }
 
 struct FoodView_Previews: PreviewProvider {
@@ -215,12 +229,12 @@ class observer : ObservableObject {
                 let magnesium = value?["magnesium"] as? CGFloat ?? 0.0
                 let potassium = value?["potassium"] as? CGFloat ?? 0.0
                 let protein = value?["protein"] as? CGFloat ?? 0.0
-                let vitaminA = value?["vitaminA"] as? CGFloat ?? 0.0
-                let vitaminB12 = value?["vitaminB12"] as? CGFloat ?? 0.0
-                let vitaminC = value?["vitaminC"] as? CGFloat ?? 0.0
-                let vitaminD = value?["vitaminD"] as? CGFloat ?? 0.0
-                let vitaminE = value?["vitaminE"] as? CGFloat ?? 0.0
-                let vitaminK = value?["vitaminK"] as? CGFloat ?? 0.0
+                let vitaminA = value?["vitamin-A"] as? CGFloat ?? 0.0
+                let vitaminB12 = value?["vitamin-B12"] as? CGFloat ?? 0.0
+                let vitaminC = value?["vitamin-C"] as? CGFloat ?? 0.0
+                let vitaminD = value?["vitamin-D"] as? CGFloat ?? 0.0
+                let vitaminE = value?["vitamin-E"] as? CGFloat ?? 0.0
+                let vitaminK = value?["vitamin-K"] as? CGFloat ?? 0.0
                 let zinc = value?["zinc"] as? CGFloat ?? 0.0
                 let healthLabels = value?["health-labels"] as? [String] ?? [""]
                 let ingredientLines = value?["ingredient-lines"] as? [String] ?? [""]
@@ -228,7 +242,7 @@ class observer : ObservableObject {
                 // create new recipe object
                 let info = Recipe(id: name, name: name, url: url, image: image, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc,  healthLabels: healthLabels, ingredientLines : ingredientLines, dict: dict)
                 self.recipe_data.append(info)
-                self.recipe_names.append(info.name)//
+                self.recipe_names.append(info.name)
             }
         })
         
@@ -246,12 +260,12 @@ class observer : ObservableObject {
                     let magnesium = value?["magnesium"] as? CGFloat ?? 0
                     let potassium = value?["potassium"] as? CGFloat ?? 0
                     let protein = value?["protein"] as? CGFloat ?? 0
-                    let vitaminA = value?["vitaminA"] as? CGFloat ?? 0
-                    let vitaminB12 = value?["vitaminB12"] as? CGFloat ?? 0
-                    let vitaminC = value?["vitaminC"] as? CGFloat ?? 0
-                    let vitaminD = value?["vitaminD"] as? CGFloat ?? 0
-                    let vitaminE = value?["vitaminE"] as? CGFloat ?? 0
-                    let vitaminK = value?["vitaminK"] as? CGFloat ?? 0
+                    let vitaminA = value?["vitamin-A"] as? CGFloat ?? 0
+                    let vitaminB12 = value?["vitamin-B12"] as? CGFloat ?? 0
+                    let vitaminC = value?["vitamin-C"] as? CGFloat ?? 0
+                    let vitaminD = value?["vitamin-D"] as? CGFloat ?? 0
+                    let vitaminE = value?["vitamin-E"] as? CGFloat ?? 0
+                    let vitaminK = value?["vitamin-K"] as? CGFloat ?? 0
                     let zinc = value?["zinc"] as? CGFloat ?? 0
                     // create new foodItem object
                     let food_item = FoodItem(id: name, name: name, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
@@ -305,81 +319,37 @@ class observer : ObservableObject {
 struct RecipeView: View {
     var recipe: Recipe
     var body: some View {
+        
         VStack{
+            Text(recipe.name)
+            .font(.title)
             List{
-                Group{
                 
+                Group{
+                    // All information from firebase (NS dict) is now
+                    // accessible through dicts and arrays
                     Section(header: Text("Minerals")){
-                        HStack{
-                            Text("Calcium")
-                            Spacer()
-                            Text(recipe.calcium.description)
-                        }
-                        HStack(){
-                            Text("Fiber")
-                            Spacer()
-                            Text(recipe.fiber.description)
-                        }
-                        HStack(){
-                            Text("Iron")
-                            Spacer()
-                            Text(recipe.iron.description)
-                        }
-                        HStack(){
-                            Text("Potassium")
-                            Spacer()
-                            Text(recipe.potassium.description)
-                        }
-                        HStack(){
-                            Text("Protein")
-                            Spacer()
-                            Text(recipe.protein.description)
-                        }
-                        HStack(){
-                            Text("Zinc")
-                            Spacer()
-                            Text(recipe.zinc.description)
-                        }
-                    }
-                    
-                }
-                
-                Group{
-
-                    Section(header: Text("Vitamins")){
-                        HStack(){
-                            Text("Vitamin A")
-                            Spacer()
-                            Text(recipe.vitaminA.description)
-                        }
-                        HStack(){
-                            Text("Vitamin B12")
-                            Spacer()
-                            Text(recipe.vitaminB12.description)
-                        }
-                        HStack(){
-                            Text("Vitamin C")
-                            Spacer()
-                            Text(recipe.vitaminC.description)
-                        }
-                        HStack(){
-                            Text("Vitamin D")
-                            Spacer()
-                            Text(recipe.vitaminD.description)
+                        ForEach(recipe.mineralKeys, id: \.self){key in
+                            HStack(){
+                                Text(key.capitalizingFirstLetter().replacingOccurrences(of:"-", with: " "))
+                                
+                                Spacer()
+                                
+                                Text(String(format: "%.2f ", (self.recipe.dict[key] as? CGFloat ?? 0)) + (self.recipe.units[key] ?? ""))
                             }
-                        HStack{
-                            Text("Vitamin E")
-                            Spacer()
-                            Text(recipe.vitaminE.description)
-                        }
-
-                        HStack(){
-                            Text("Vitamin K")
-                            Spacer()
-                            Text(recipe.vitaminK.description)
                         }
                     }
-                    
+                
+                    Section(header: Text("Vitamins")){
+                        ForEach(recipe.vitaminKeys, id: \.self){key in
+                            HStack(){
+                                Text(key.capitalizingFirstLetter().replacingOccurrences(of:"-", with: " "))
+                                
+                                Spacer()
+                                Text(String(format: "%.2f ", (self.recipe.dict[key] as? CGFloat ?? 0)) + (self.recipe.units[key] ?? ""))
+                            }
+                        }
+                    }
                 }
                 
                 Group{
@@ -415,6 +385,10 @@ struct RecipeRow: View {
 }
 
 class Recipe : Identifiable {
+    /*All information from firebase (NS dict) is now
+     accessible through dicts and arrays
+     
+     */
     var id : String
     var name : String
     var url : String
@@ -435,7 +409,11 @@ class Recipe : Identifiable {
     var healthLabels: [String]
     var ingredientLines: [String]
     var dict: Dictionary<String, Any>
-    var keys: [String]
+    var vitaminKeys: [String]
+    var mineralKeys: [String]
+    var units: Dictionary<String, String>
+
+    
     
     init(id: String, name: String, url: String, image: String, calcium: CGFloat, fiber: CGFloat, iron: CGFloat, magnesium: CGFloat, potassium: CGFloat, protein: CGFloat, vitaminA: CGFloat, vitaminB12: CGFloat, vitaminC: CGFloat, vitaminD: CGFloat, vitaminE: CGFloat, vitaminK: CGFloat, zinc: CGFloat,  healthLabels: [String], ingredientLines : [String], dict: Dictionary<String, Any>){
 
@@ -456,20 +434,35 @@ class Recipe : Identifiable {
         self.vitaminE = vitaminE
         self.vitaminK = vitaminK
         self.zinc = zinc
-        self.keys = []
+        self.vitaminKeys = []
+        self.mineralKeys = []
         
         // lists
         self.healthLabels = healthLabels
         self.ingredientLines = ingredientLines
         
-        // dictionary
+        // dictionary of all firebase data
         self.dict = dict
+        
+        self.units = ["protein":"g", "vitamin-A": "µg", "vitamin-B12": "µg", "vitamin-D": "IU", "vitamin-K": "µg"]
+            
         for (key,_) in dict{
             if (dict[key] as? CGFloat) != nil{
-                self.keys.append(key)
+                if (key.contains("vitamin")){
+                    self.vitaminKeys.append(key)
+                }
+                else{
+                    self.mineralKeys.append(key)
+                }
+                if(self.units[key] == nil){
+                    self.units[key] = "mg"
+                }
+                
             }
             
         }
+        self.vitaminKeys = vitaminKeys.sorted()
+        self.mineralKeys = mineralKeys.sorted()
         
     }
 
@@ -573,6 +566,9 @@ struct FoodItemView: View {
                             Text("3").tag(3)
                             Text("4").tag(4)
                             Text("5").tag(5)
+                            Text("6").tag(6)
+                            Text("7").tag(7)
+                            Text("8").tag(8)
                         }
                         addFoodButton(foodItem: foodItem, ounces: ounces)
                     }
@@ -615,7 +611,7 @@ struct addFoodButton: View {
             }){
                 Text("add food")
                 .padding()
-                .background(Color.black)
+                .background(Color.black.opacity(0.2))
                 
                 .alert(isPresented: $alertSaved){() -> Alert in
                     Alert (title: Text("Saved food item!"), message:	 Text("go back to items to add other foods"))
