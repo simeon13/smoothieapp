@@ -196,9 +196,8 @@ class userSettings : ObservableObject {
             weekly_values.append(nv)
         }
         
-        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date(), weekly: weekly_values, ranked_recipes: [Recipe]())
                 
-        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date(), weekly: [TotalValues](), ranked_recipes: [Recipe](), needed_nutrients: [String]())
+        user_profile = UserProfile(id: "id", first_name: first_name, last_name: last_name, age: age, gender: str_gender, allergies: [String](), health_options: health_options, time: Date(), weekly: weekly_values, ranked_recipes: [Recipe](), needed_nutrients: [String]())
             
         total_values = TotalValues(id: "id", calcium: 0.0, fiber: 0.0, iron: 0.0, magnesium: 0.0, potassium: 0.0, protein: 0.0, vitaminA: 0.0, vitaminB12: 0.0, vitaminC: 0.0, vitaminD: 0.0, vitaminE: 0.0, vitaminK: 0.0, zinc: 0.0)
         
