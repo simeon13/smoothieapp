@@ -267,8 +267,9 @@ class observer : ObservableObject {
                     let vitaminE = value?["vitamin-E"] as? CGFloat ?? 0
                     let vitaminK = value?["vitamin-K"] as? CGFloat ?? 0
                     let zinc = value?["zinc"] as? CGFloat ?? 0
+                    let dict = value as! Dictionary<String, Any>
                     // create new foodItem object
-                    let food_item = FoodItem(id: name, name: name, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc)
+                    let food_item = FoodItem(id: name, name: name, calcium: calcium, fiber: fiber, iron: iron, magnesium: magnesium, potassium: potassium, protein: protein, vitaminA: vitaminA, vitaminB12: vitaminB12, vitaminC: vitaminC, vitaminD: vitaminD, vitaminE: vitaminE, vitaminK: vitaminK, zinc: zinc, dict: dict)
                     if (entry == "Vegetables"){
                         self.vegetable_data.append(food_item)
                         self.food_data.append(food_item.name)
@@ -388,6 +389,10 @@ class Recipe : Identifiable {
     /*All information from firebase (NS dict) is now
      accessible through dicts and arrays
      
+     So essentially, we can add new nutrients to the database
+     and it will automatically appear for each food (under minerals
+     with mg units)
+     
      */
     var id : String
     var name : String
@@ -469,94 +474,49 @@ class Recipe : Identifiable {
 }
 	
 struct FoodItemView: View {
+    /*All information from firebase (NS dict) is now
+     accessible through dicts and arrays
+     
+     So essentially, we can add new nutrients to the database
+     and it will automatically appear for each food (under minerals
+     with mg units)
+     
+     */
     var foodItem : FoodItem
     @State private var ounces = 0
     var body: some View {
         VStack{
+            Text(foodItem.name)
+            .font(.title)
             List{
-            Group{
+            
                 
-                    Section(header: Text("Minerals")){
-                        HStack{
-                            Text("Calcium")
-                            Spacer()
-                            Text(foodItem.calcium.description)
-                        }
+                // All information from firebase (NS dict) is now
+                // accessible through dicts and arrays
+                Section(header: Text("Minerals")){
+                    ForEach(foodItem.mineralKeys, id: \.self){key in
                         HStack(){
-                            Text("Fiber")
+                            Text(key.capitalizingFirstLetter().replacingOccurrences(of:"-", with: " "))
+                            
                             Spacer()
-                            Text(foodItem.fiber.description)
+                            
+                            Text(String(format: "%.2f ", (self.foodItem.dict[key] as? CGFloat ?? 0)) + (self.foodItem.units[key] ?? ""))
                         }
-                        HStack(){
-                            Text("Iron")
-                            Spacer()
-                            Text(foodItem.iron.description)
-                        }
-                        HStack(){
-                            Text("Potassium")
-                            Spacer()
-                            Text(foodItem.potassium.description)
-                        }
-                        HStack(){
-                            Text("Protein")
-                            Spacer()
-                            Text(foodItem.protein.description)
-                        }
-                        HStack(){
-                            Text("Zinc")
-                            Spacer()
-                            Text(foodItem.zinc.description)
-                        }
-
                     }
-
-                    
                 }
-                    
-                
             
-            
-            Group{
-               
-                    Section(header: Text("Vitamins")){
+                Section(header: Text("Vitamins")){
+                    ForEach(foodItem.vitaminKeys, id: \.self){key in
                         HStack(){
-                            Text("Vitamin A")
+                            Text(key.capitalizingFirstLetter().replacingOccurrences(of:"-", with: " "))
+                            
                             Spacer()
-                            Text(foodItem.vitaminA.description)
-                        }
-                        HStack(){
-                            Text("Vitamin B12")
-                            Spacer()
-                            Text(foodItem.vitaminB12.description)
-                        }
-                        HStack(){
-                            Text("Vitamin C")
-                            Spacer()
-                            Text(foodItem.vitaminC.description)
-                        }
-                        HStack(){
-                            Text("Vitamin D")
-                            Spacer()
-                            Text(foodItem.vitaminD.description)
-                            }
-                        HStack{
-                            Text("Vitamin E")
-                            Spacer()
-                            Text(foodItem.vitaminE.description)
-                        }
-
-                        HStack(){
-                            Text("Vitamin K")
-                            Spacer()
-                            Text(foodItem.vitaminK.description)
+                            Text(String(format: "%.2f ", (self.foodItem.dict[key] as? CGFloat ?? 0)) + (self.foodItem.units[key] ?? ""))
                         }
                     }
-                
-            }
-            
-            
+                }
 
-                
+                    
                 Section(header: Text("Choose amount")){
                     HStack(){
                         Picker(selection: $ounces, label: Text("Ounces")){
@@ -626,7 +586,7 @@ struct addFoodButton: View {
 }
 
 
-struct FoodItem : Identifiable {
+class FoodItem : Identifiable {
     var id : String
     var name : String
     var calcium : CGFloat
@@ -642,6 +602,54 @@ struct FoodItem : Identifiable {
     var vitaminE : CGFloat
     var vitaminK : CGFloat
     var zinc : CGFloat
+    var dict: Dictionary<String, Any>
+    var vitaminKeys: [String]
+    var mineralKeys: [String]
+    var units: Dictionary<String, String>
+    
+    init(id: String, name: String, calcium: CGFloat, fiber: CGFloat, iron: CGFloat, magnesium: CGFloat, potassium: CGFloat, protein: CGFloat, vitaminA: CGFloat, vitaminB12: CGFloat, vitaminC: CGFloat, vitaminD: CGFloat, vitaminE: CGFloat, vitaminK: CGFloat, zinc: CGFloat, dict: Dictionary<String, Any> = [:]){
+        self.id = id
+        self.name = name
+
+        self.calcium = calcium
+        self.fiber = fiber
+        self.iron = iron
+        self.magnesium = magnesium
+        self.potassium = potassium
+        self.protein = protein
+        self.vitaminA = vitaminA
+        self.vitaminB12 = vitaminB12
+        self.vitaminC = vitaminC
+        self.vitaminD = vitaminD
+        self.vitaminE = vitaminE
+        self.vitaminK = vitaminK
+        self.zinc = zinc
+        self.dict = dict
+        self.vitaminKeys = []
+        self.mineralKeys = []
+        
+        self.units = ["protein":"g", "vitamin-A": "µg", "vitamin-B12": "µg", "vitamin-D": "IU", "vitamin-K": "µg"]
+            
+        for (key,_) in dict{
+            if (dict[key] as? CGFloat) != nil{
+                if (key.contains("vitamin")){
+                    self.vitaminKeys.append(key)
+                }
+                else{
+                    self.mineralKeys.append(key)
+                }
+                if(self.units[key] == nil){
+                    self.units[key] = "mg"
+                }
+                
+            }
+            
+        }
+        self.vitaminKeys = vitaminKeys.sorted()
+        self.mineralKeys = mineralKeys.sorted()
+            
+        
+    }
 }
 
 struct SearchBar : UIViewRepresentable{
