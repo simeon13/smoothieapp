@@ -353,6 +353,10 @@ struct RecipeView: View {
                         }
                     }
                     
+                    Section(header: Text("Click button to add recipe")){
+                        addRecipeButton(foodItem: recipe, ounces: 1)
+                    }
+                    
                 }
             }
         }
@@ -565,6 +569,46 @@ struct addFoodButton: View {
         }
     }
 }
+
+
+
+
+struct addRecipeButton: View {
+    var foodItem : Recipe
+    var ounces : Int
+    @State private var alertSaved = false
+    @EnvironmentObject var userInfo : userSettings
+    var body: some View {
+        Button(action: {
+            self.userInfo.total_values.calcium += self.foodItem.calcium * CGFloat(self.ounces)
+            self.userInfo.total_values.fiber += self.foodItem.fiber * CGFloat(self.ounces)
+            self.userInfo.total_values.iron += self.foodItem.iron * CGFloat(self.ounces)
+            self.userInfo.total_values.potassium += self.foodItem.potassium * CGFloat(self.ounces)
+            self.userInfo.total_values.protein += self.foodItem.protein * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminA += self.foodItem.vitaminA * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminB12 += self.foodItem.vitaminB12 * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminC += self.foodItem.vitaminC * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminD += self.foodItem.vitaminD * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminE += self.foodItem.vitaminE * CGFloat(self.ounces)
+            self.userInfo.total_values.vitaminK += self.foodItem.vitaminK * CGFloat(self.ounces)
+            self.userInfo.total_values.zinc += self.foodItem.zinc * CGFloat(self.ounces)
+            if (self.ounces > 0){
+                self.alertSaved = true
+            }
+            }){
+                Text("add recipe")
+                .padding()
+                .background(Color.black.opacity(0.2))
+                
+                .alert(isPresented: $alertSaved){() -> Alert in
+                    Alert (title: Text("Saved recipe!"), message:     Text("go back to items to add other foods"))
+                
+                  
+                }
+        }
+    }
+}
+
 
 
 class FoodItem : Identifiable {
