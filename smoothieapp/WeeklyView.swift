@@ -8,27 +8,14 @@
 import SwiftUI
 
 struct WeeklyView: View {
+    @EnvironmentObject var userInfo : userSettings
     @State var pickerselection = 0
     @State var nutrients : [String] = [
     "Vitamin-A", "Vitamin-B12", "Vitamin-C", "Vitamin-D",
     "Vitamin-E", "Vitamin-K", "Calcium", "Fiber",
     "Iron", "Magnesium", "Potassium", "Protein",
     "Zinc"]
-    @State var values : [[CGFloat]] = [
-    [5,150,50,100,200,110,30,170,50],
-    [200,110,30,170,50, 100,100,100,200],
-    [10,20,50,100,120,90,180,200,40],
-    [30,20,10,20,30,40,50,40,60,50],
-    [10,30,60,100,150],
-    [30,30,30,60,60,90,90,120,150],
-    [20,40,60,80,100,120,140,160,180,200],
-    [25,50,75,100,150,125,175],
-    [50,100,150,200],
-    [50,60,70,80,120,110,100,90],
-    [180,150,120,90,60,30],
-    [30,50,40,70,60,90],
-    [40,70,50,130,110,80,70,100]
-    ]
+    @State var values : [[CGFloat]] = []
     
     var body: some View {
         ZStack{
@@ -69,7 +56,7 @@ struct WeeklyView: View {
                 //
                 HStack(alignment: .center, spacing: 10)
                 {
-                    ForEach(values[pickerselection], id: \.self){
+                    ForEach(userInfo.user_profile.weekly[pickerselection], id: \.self){
                         data in
                         
                         BarView(value: data, cornerRadius: CGFloat(integerLiteral: 1*self.pickerselection))
@@ -85,6 +72,7 @@ struct WeeklyView: View {
         UISegmentedControl.appearance().selectedSegmentTintColor = .darkGray
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
         UISegmentedControl.appearance().setTitleTextAttributes([.foregroundColor: UIColor.white], for: .normal)
+        
     }
 }
 
@@ -111,4 +99,8 @@ struct WeeklyView_Previews: PreviewProvider {
     static var previews: some View {
         WeeklyView()
     }
+}
+
+func updateValues(userInfo: userSettings){
+    
 }
