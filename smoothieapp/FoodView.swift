@@ -29,7 +29,6 @@ struct FoodView: View {
     @State var pickerselection = 0
     
     var body: some View {
-        NavigationView{
             List {
                 //search bar
                 SearchBar(text: $searchTerm)
@@ -52,20 +51,6 @@ struct FoodView: View {
                     
                     }.pickerStyle(SegmentedPickerStyle()).padding(.horizontal, 10).colorInvert()
                 
-//                Section(header: Text("Search Results")){
-//                ForEach(self.data.food_data.filter{
-//                    self.searchTerm.isEmpty ? true : $0.localizedStandardContains(self.searchTerm)
-//                }, id: \.self){
-//                    name in
-//                    ForEach(self.data.items){i in
-//                        if name == i.name{
-//                            NavigationLink(destination: FoodItemView(foodItem: i)){
-//                                FoodItemRow(foodItem: i)
-//                            }
-//                        }
-//                    }
-//                }
-//                }
                 // Recipes
                 if pickerselection == 0 || pickerselection == 1{
                 Section(header: Text("Recipes")) {
@@ -180,13 +165,9 @@ struct FoodView: View {
                 }
                 }
             }
-            .navigationBarTitle("Items")
+            .navigationBarTitle("Database Items")
             .listStyle(GroupedListStyle())
-        }
-        .navigationBarTitle("Food Database", displayMode: .inline)
-    
     }
-    
 }
 
 struct FoodView_Previews: PreviewProvider {
