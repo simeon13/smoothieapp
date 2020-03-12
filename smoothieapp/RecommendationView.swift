@@ -153,12 +153,12 @@ func nutrient_rank(userInfo: userSettings) -> [String : CGFloat] {
     dict["Magnesium"] = magnesium
     dict["Potassium"] = potassium
     dict["Protein"] = protein
-    dict["VitaminA"] = vitaminA
-    dict["VitaminB12"] = vitaminB12
-    dict["VitaminC"] = vitaminC
-    dict["VitaminD"] = vitaminD
-    dict["VitaminE"] = vitaminE
-    dict["VitaminK"] = vitaminK
+    dict["Vitamin A"] = vitaminA
+    dict["Vitamin B12"] = vitaminB12
+    dict["Vitamin C"] = vitaminC
+    dict["Vitamin D"] = vitaminD
+    dict["Vitamin E"] = vitaminE
+    dict["Vitamin K"] = vitaminK
     dict["Zinc"] = zinc
     
     return dict
@@ -205,22 +205,22 @@ func percent_increase(userInfo: userSettings, nutrient: String, recipe: Recipe) 
     if nutrient == "Protein" {
         return (recipe.protein / userInfo.max_values.protein)
     }
-    if nutrient == "VitaminA" {
+    if nutrient == "Vitamin A" {
         return (recipe.vitaminA / userInfo.max_values.vitaminA)
     }
-    if nutrient == "VitaminB12" {
+    if nutrient == "Vitamin B12" {
         return (recipe.vitaminB12 / userInfo.max_values.vitaminB12)
     }
-    if nutrient == "VitaminC" {
+    if nutrient == "Vitamin C" {
            return (recipe.vitaminC / userInfo.max_values.vitaminC)
     }
-    if nutrient == "VitaminD" {
+    if nutrient == "Vitamin D" {
            return (recipe.vitaminD / userInfo.max_values.vitaminD)
     }
-    if nutrient == "VitaminE" {
+    if nutrient == "Vitamin E" {
            return (recipe.vitaminE / userInfo.max_values.vitaminE)
     }
-    if nutrient == "VitaminK" {
+    if nutrient == "Vitamin K" {
            return (recipe.vitaminK / userInfo.max_values.vitaminK)
     }
     if nutrient == "Zinc" {
