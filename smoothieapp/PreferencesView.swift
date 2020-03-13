@@ -14,6 +14,7 @@ struct PreferencesView: View {
     @EnvironmentObject var userInfo: userSettings
     @State var allergies = ""
     @State var healthoptions = ""
+    @State private var buttonSaved = false
     
     var body: some View {
         VStack() {
@@ -52,6 +53,10 @@ struct PreferencesView: View {
                             let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
 
                             UNUserNotificationCenter.current().add(request)
+                            self.buttonSaved = true
+                        }
+                        .alert(isPresented: $buttonSaved){() -> Alert in
+                            Alert (title: Text("Saved!"), message: Text("Notification Time Saved."))
                         }
                     }
                     Section(header: Text("Health Options")) {
